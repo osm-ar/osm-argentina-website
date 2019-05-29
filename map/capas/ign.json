@@ -1,0 +1,365 @@
+var edificios_3d = {
+    "id":"osmbuildings",
+    "type":"fill-extrusion",
+    "source": {
+        "type": "vector",
+        "url": "https://data.osmbuildings.org/0.2/z7qsu3z2/schema.json"
+    },
+    "source-layer":"building",
+    "paint": {
+        "fill-extrusion-color": {
+            "type": "identity", "property": "color"
+        }
+        ,
+        "fill-extrusion-height": {
+            "type": "identity", "property": "height"
+        }
+        ,
+        "fill-extrusion-base": {
+            "type": "identity", "property": "minHeight"
+        }
+        ,
+        "fill-extrusion-opacity": {
+            "stops": [[14, 0], [14.5, 0.75]]
+        }
+    }
+};
+var red_vial = {
+    "interactive": true,
+    "id": "red_vial",
+    "description":"Red vial",
+    "type": "line",
+    "source": {
+        "type": "vector",
+        "url": "http://wms.ign.gob.ar/data/red_vial.json"
+    },
+    "source-layer": "red_vialgeojson",
+    "layout": {
+        "line-join": "round",
+        "line-cap": "round"
+    },
+    "paint": {
+        "line-color": {
+            "property": "d_RST",
+            "type": "categorical",
+            "stops": [
+                ["Pavimentado", "#8a2be2"],
+                ["Consolidado", "#3cb371"],
+                ["Tierra", "#f4a460"],
+                ["Información no Disponible", "#e9967a"]
+            ]
+        }
+    },
+    "minzoom": 5,
+    "maxzoom": 24
+};
+var corriente_agua_l = {
+    "interactive": true,
+    "id": "corriente_agua_l",
+    "type": "line",
+    "source": {
+        "type": "vector",
+        "url": "http://wms.ign.gob.ar/data/corriente_agua_l.json"
+    },
+    "source-layer": "corriente_agua_l",
+    "filter": [
+    "==",
+    "$type",
+    "LineString"
+    ],
+    "paint": {
+    "line-color": "hsl(205, 56%, 73%)",
+    "line-width": {
+      "base": 1.4,
+      "stops": [
+        [
+          8,
+          1
+        ],
+        [
+          20,
+          8
+        ]
+      ]
+    },
+    "line-opacity": 1
+    },
+    "layout": {
+    "visibility": "visible"
+    },
+    "minzoom": 5,
+    "maxzoom": 24
+};
+var corriente_agua_l_name = {
+  "id": "corriente_agua_l_name",
+  "type": "symbol",
+  "metadata": {},
+  "source": {
+      "type": "vector",
+      "url": "http://wms.ign.gob.ar/data/corriente_agua_l.json"
+  },
+  "source-layer": "corriente_agua_l",
+  "minzoom": 5,
+  "maxzoom": 24,
+  "filter": [
+    "all",
+    [
+      "==",
+      "$type",
+      "LineString"
+    ]
+  ],
+  "layout": {
+    "text-field": "{FNA}",
+    "text-font": [
+      "Roboto Regular"
+    ],
+    "text-max-width": 5,
+    "text-size": 16,
+    "symbol-placement": "line",
+    "visibility": "visible",
+    "text-letter-spacing": 0.2,
+    "text-offset": [
+      0,
+      0
+    ]
+  },
+  "paint": {
+    "text-color": "rgba(104, 107, 226, 1)",
+    "text-halo-color": "rgba(255,255,255,1)",
+    "text-halo-width": 1
+  }
+};
+var espejo_agua = {
+  "interactive": true,
+  "id": "espejo_agua",
+  "type": "fill",
+  "source": {
+        "type": "vector",
+        "url": "http://wms.ign.gob.ar/data/espejo_agua.json"
+    },
+  "source-layer": "espejo_aguageojson",
+  "layout": {
+    "visibility": "visible"
+  },
+  "paint": {
+    "fill-color": "rgba(166, 214, 239, 1)",
+    "fill-outline-color": "rgba(77, 174, 234, 1)"
+  },
+  "minzoom": 5,
+  "maxzoom": 24
+};
+var espejo_agua_label = {
+  "id": "espejo_agua_label",
+  "type": "symbol",
+  "metadata": {},
+  "source": {
+        "type": "vector",
+        "url": "http://wms.ign.gob.ar/data/espejo_agua.json"
+    },
+  "source-layer": "espejo_aguageojson",
+  "minzoom": 9,
+  "maxzoom": 24,
+  "filter": [
+    "all"
+  ],
+  "layout": {
+    "text-field": "{FNA}",
+    "text-font": [
+      "Roboto Italic"
+    ],
+    "text-max-width": 5,
+    "text-size": 15,
+    "visibility": "visible",
+    "text-allow-overlap": false,
+    "text-ignore-placement": false,
+    "text-pitch-alignment": "auto",
+    "text-rotation-alignment": "auto",
+    "icon-allow-overlap": false,
+    "icon-ignore-placement": false,
+    "icon-optional": false,
+    "icon-text-fit": "none",
+    "symbol-placement": "point",
+    "symbol-avoid-edges": true,
+    "symbol-spacing": 250,
+    "text-padding": 15
+  },
+  "paint": {
+    "text-color": "rgba(84, 145, 228, 1)",
+    "text-halo-color": "rgba(255,255,255,0.7)",
+    "text-halo-width": 1
+  }
+};
+var municipios = {
+  "id": "municipios",
+  "type": "line",
+  "metadata": {},
+  "source": {
+        "type": "vector",
+        "url": "http://wms.ign.gob.ar/data/municipio.json"
+    },
+  "source-layer": "municipiogeojson",
+  "filter": [
+    "all"
+  ],
+  "layout": {
+    "line-join": "round",
+    "visibility": "visible"
+  },
+  "paint": {
+    "line-color": "rgba(207, 155, 200, 1)",
+    "line-dasharray": [
+      5,
+      1
+    ],
+    "line-width": {
+      "base": 1,
+      "stops": [
+        [
+          4,
+          0.4
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          12,
+          1.8
+        ]
+      ]
+    }
+  },
+  "maxzoom": 24
+};
+var colectivosRef = {
+  "id": "colectivos-ref",
+  "type": "symbol",
+  "metadata": {},
+  "source": {
+        "type": "vector",
+        "url": "http://www.osmargentina.org:8080/data/Colectivos.json"
+    },
+  "source-layer": "colectivos",
+  "minzoom": 5,
+  "filter": [
+    "all",
+    [
+      "has",
+      "ref"
+    ]
+  ],
+  "layout": {
+    "icon-image": "",
+    "icon-rotation-alignment": "viewport",
+    "symbol-placement": "line",
+    "symbol-spacing": 500,
+    "text-field": "{ref}",
+    "text-font": [
+      "Roboto Regular"
+    ],
+    "text-offset": [
+      0,
+      0.1
+    ],
+    "text-rotation-alignment": "auto",
+    "text-size": 12,
+    "icon-size": 0.8,
+    "visibility": "visible",
+    "text-ignore-placement": false,
+    "text-allow-overlap": false,
+    "text-pitch-alignment": "auto"
+  },
+  "paint": {
+    "text-color": "rgba(224, 20, 16, 1)",
+    "text-halo-color": "rgba(255, 253, 253, 1)",
+    "text-halo-width": 2
+  },
+  "maxzoom": 24
+};
+var colectivos = {
+  "id": "colectivos",
+  "type": "line",
+  "metadata": {},
+  "source": {
+        "type": "vector",
+        "url": "http://www.osmargentina.org:8080/data/Colectivos.json"
+    },
+  "source-layer": "colectivos",
+  "filter": [
+    "all"
+  ],
+  "layout": {
+    "line-cap": "round",
+    "line-join": "round",
+    "visibility": "visible"
+  },
+  "paint": {
+    "line-color": "#7983EF",
+    "line-width": {
+      "base": 1.2,
+      "stops": [
+        [
+          9,
+          1
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          22,
+          10
+        ]
+      ]
+    }
+  },
+  "maxzoom": 24,
+  "minzoom": 5
+};
+var alturas_calles = {
+  "id": "alturas_calles",
+  "type": "symbol",
+  "metadata": {},
+  "source": {
+        "type": "vector",
+        "url": "http://www.osmargentina.org:8080/data/calles_lanus.json"
+    },
+  "source-layer": "calles_lanus",
+  "filter": [
+    "all"
+  ],
+  "layout": {
+    "symbol-placement": "line",
+    "text-anchor": "center",
+    "text-field": "Izq {iniciali} - {finali}      Der {iniciald} - {finald}",
+    "text-font": [
+      "Roboto Regular"
+    ],
+    "text-offset": [
+      0,
+      1
+    ],
+    "text-size": {
+      "base": 1,
+      "stops": [
+        [
+          13,
+          12
+        ],
+        [
+          14,
+          13
+        ]
+      ]
+    },
+    "visibility": "visible"
+  },
+  "paint": {
+    "text-color": "rgba(52, 52, 228, 1)",
+    "text-halo-blur": 0.5,
+    "text-halo-width": 1,
+    "text-halo-color": "rgba(255, 255, 255, 1)"
+  },
+  "minzoom": 17
+}
