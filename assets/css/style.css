@@ -37,7 +37,7 @@ header nav{
 
 .nav-buttons ul li a{
   text-decoration: none;
-  padding: 20px;
+  padding: 20px 8px;
   display: inline-block;
 }
 
