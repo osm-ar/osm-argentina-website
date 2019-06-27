@@ -33,6 +33,15 @@ $('#satelite').click(function (e) {
 	}
 });
 
+$('#chk_sup_calles').click(function (e) {
+	if ( $(this).is(':checked') == true ) {
+		supCalles();
+	} else {
+		map.removeLayer("sup-calles-paved");
+		map.removeLayer("sup-calles-unpaved");
+	}
+});
+
 $('#chk_cruce_andes').click(function (e) {
 	if ( $(this).is(':checked') == true ) {
 		cruceAndes();
@@ -109,6 +118,108 @@ $("#btnPanelDatos").click(function(){
     	$("#btnPanelDatos").html("Ver datos de objetos");
     }
 });
+
+function supCalles() {
+	map.addLayer(
+		{
+			"id": "sup-calles-unpaved",
+			"source": "openmaptiles",
+			"source-layer": "transportation",
+			"type": "line",
+			"minzoom": 13,
+			"filter": [
+			  "all",
+			  [
+				"==",
+				"$type",
+				"LineString"
+			  ],
+			  [
+				"in",
+				"class",
+				"minor",
+				"service"
+			  ],
+			  [
+				"==",
+				"surface",
+				"unpaved"
+			  ]
+			],
+			"layout": {
+			  "line-cap": "round",
+			  "line-join": "round",
+			  "visibility": "visible"
+			},
+			"paint": {
+			  "line-color": "rgba(235, 202, 7, 1)",
+			  "line-width": {
+				"base": 1.55,
+				"stops": [
+				  [
+					4,
+					0.25
+				  ],
+				  [
+					20,
+					30
+				  ]
+				]
+			}
+		}
+	}
+	);
+
+map.addLayer(
+	{
+		"id": "sup-calles-paved",
+		"source": "openmaptiles",
+		"source-layer": "transportation",
+		"type": "line",
+		"minzoom": 13,
+		"filter": [
+		  "all",
+		  [
+			"==",
+			"$type",
+			"LineString"
+		  ],
+		  [
+			"in",
+			"class",
+			"minor",
+			"service"
+		  ],
+		  [
+			"==",
+			"surface",
+			"paved"
+		  ]
+		],
+		"layout": {
+		  "line-cap": "round",
+		  "line-join": "round",
+		  "visibility": "visible"
+		},
+		"paint": {
+		  "line-color": "rgba(66, 248, 6, 1)",
+		  "line-width": {
+			"base": 1.55,
+			"stops": [
+			  [
+				4,
+				0.25
+			  ],
+			  [
+				20,
+				30
+			  ]
+			]
+		  }
+		}
+	  }
+	  );
+}
 
 function cruceAndes() {
 	map.addSource("cruce-andes", {
