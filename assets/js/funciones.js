@@ -126,7 +126,7 @@ function supCalles() {
 			"source": "openmaptiles",
 			"source-layer": "transportation",
 			"type": "line",
-			"minzoom": 13,
+			"minzoom": 12,
 			"filter": [
 			  "all",
 			  [
@@ -137,8 +137,17 @@ function supCalles() {
 			  [
 				"in",
 				"class",
+				"motorway",
+				"trunk",
+				"primary",
+				"secondary",
+				"tertiary",
 				"minor",
-				"service"
+				"service",
+				"track",
+				"path",
+				"raceway",
+				"transit"
 			  ],
 			  [
 				"==",
@@ -152,7 +161,7 @@ function supCalles() {
 			  "visibility": "visible"
 			},
 			"paint": {
-			  "line-color": "rgba(235, 202, 7, 1)",
+			  "line-color": "#e87400",
 			  "line-width": {
 				"base": 1.55,
 				"stops": [
@@ -176,7 +185,7 @@ map.addLayer(
 		"source": "openmaptiles",
 		"source-layer": "transportation",
 		"type": "line",
-		"minzoom": 13,
+		"minzoom": 12,
 		"filter": [
 		  "all",
 		  [
@@ -187,8 +196,17 @@ map.addLayer(
 		  [
 			"in",
 			"class",
+			"motorway",
+			"trunk",
+			"primary",
+			"secondary",
+			"tertiary",
 			"minor",
-			"service"
+			"service",
+			"track",
+			"path",
+			"raceway",
+			"transit"
 		  ],
 		  [
 			"==",
@@ -202,7 +220,7 @@ map.addLayer(
 		  "visibility": "visible"
 		},
 		"paint": {
-		  "line-color": "rgba(66, 248, 6, 1)",
+		  "line-color": "#d742f5",
 		  "line-width": {
 			"base": 1.55,
 			"stops": [
