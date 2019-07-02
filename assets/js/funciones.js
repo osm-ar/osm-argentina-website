@@ -33,6 +33,7 @@ $(document).ready(function () {
 		}
 	});
 
+	eclipse(); // inicia la capa de eclipse por defecto
 	$('#eclipse-solar-2019').click(function (e) {
 		if ($(this).is(':checked') == true) {
 			eclipse();
