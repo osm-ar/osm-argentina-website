@@ -33,6 +33,15 @@ $('#satelite').click(function (e) {
 	}
 });
 
+$('#chk_sup_calles').click(function (e) {
+	if ( $(this).is(':checked') == true ) {
+		supCalles();
+	} else {
+		map.removeLayer("sup-calles-paved");
+		map.removeLayer("sup-calles-unpaved");
+	}
+});
+
 $('#chk_cruce_andes').click(function (e) {
 	if ( $(this).is(':checked') == true ) {
 		cruceAndes();
@@ -109,6 +118,126 @@ $("#btnPanelDatos").click(function(){
     	$("#btnPanelDatos").html("Ver datos de objetos");
     }
 });
+
+function supCalles() {
+	map.addLayer(
+		{
+			"id": "sup-calles-unpaved",
+			"source": "openmaptiles",
+			"source-layer": "transportation",
+			"type": "line",
+			"minzoom": 12,
+			"filter": [
+			  "all",
+			  [
+				"==",
+				"$type",
+				"LineString"
+			  ],
+			  [
+				"in",
+				"class",
+				"motorway",
+				"trunk",
+				"primary",
+				"secondary",
+				"tertiary",
+				"minor",
+				"service",
+				"track",
+				"path",
+				"raceway",
+				"transit"
+			  ],
+			  [
+				"==",
+				"surface",
+				"unpaved"
+			  ]
+			],
+			"layout": {
+			  "line-cap": "round",
+			  "line-join": "round",
+			  "visibility": "visible"
+			},
+			"paint": {
+			  "line-color": "#e87400",
+			  "line-width": {
+				"base": 1.55,
+				"stops": [
+				  [
+					4,
+					0.25
+				  ],
+				  [
+					20,
+					30
+				  ]
+				]
+			}
+		}
+	}
+	);
+
+map.addLayer(
+	{
+		"id": "sup-calles-paved",
+		"source": "openmaptiles",
+		"source-layer": "transportation",
+		"type": "line",
+		"minzoom": 12,
+		"filter": [
+		  "all",
+		  [
+			"==",
+			"$type",
+			"LineString"
+		  ],
+		  [
+			"in",
+			"class",
+			"motorway",
+			"trunk",
+			"primary",
+			"secondary",
+			"tertiary",
+			"minor",
+			"service",
+			"track",
+			"path",
+			"raceway",
+			"transit"
+		  ],
+		  [
+			"==",
+			"surface",
+			"paved"
+		  ]
+		],
+		"layout": {
+		  "line-cap": "round",
+		  "line-join": "round",
+		  "visibility": "visible"
+		},
+		"paint": {
+		  "line-color": "#d742f5",
+		  "line-width": {
+			"base": 1.55,
+			"stops": [
+			  [
+				4,
+				0.25
+			  ],
+			  [
+				20,
+				30
+			  ]
+			]
+		  }
+		}
+	  }
+	  );
+}
 
 function cruceAndes() {
 	map.addSource("cruce-andes", {
