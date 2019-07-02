@@ -138,12 +138,24 @@ $(document).ready(function () {
 		return i;
 	}
 
-	var d = new Date();
-	var h = addZero(d.getUTCHours());
-	var m = addZero(d.getUTCMinutes());
-	var horaUtc = h + ':' + m + ':' + '00';
-
+var d, h, m, horaUtc, umbraFilter;
 	function eclipse() {
+		d = new Date();
+		h = addZero(d.getUTCHours());
+		m = addZero(d.getUTCMinutes());
+		horaUtc = h + ':' + m + ':' + '00';
+
+		// Actualiza el filtro de la sombra cada 10 seg reflejando la nueva hora
+		window.setInterval(function () {
+			d = new Date();
+			h = addZero(d.getUTCHours());
+			m = addZero(d.getUTCMinutes());
+			horaUtc = h + ':' + m + ':' + '00';
+			console.log(horaUtc);
+			umbraFilter = ["==", 'UTCTime', horaUtc];
+			map.setFilter('umbra', umbraFilter);
+		}, 10000);
+
 		map.addSource("penumbra", {
 			"type": "geojson",
 			"data": "map/capas/eclipse-penumbra-2019.geojson",
@@ -158,16 +170,16 @@ $(document).ready(function () {
 				"fill-opacity": 0.05,
 			}
 		});
-/* 		map.addLayer({
-			"id": "texto-penumbra",
-			"type": "symbol",
-			"source": "penumbra",
-			"layout": {
-				"text-field": ["get", "name"],
-				"text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-				"text-justify": "auto"
-			}
-		}); */
+		/* 		map.addLayer({
+					"id": "texto-penumbra",
+					"type": "symbol",
+					"source": "penumbra",
+					"layout": {
+						"text-field": ["get", "name"],
+						"text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+						"text-justify": "auto"
+					}
+				}); */
 		map.addSource("umbra", {
 			"type": "geojson",
 			"data": "map/capas/eclipse-umbra-2019.geojson"
