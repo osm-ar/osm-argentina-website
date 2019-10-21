@@ -20,7 +20,7 @@
     },
     "openmaptiles": {
       "type": "vector",
-      "url": "https://free.tilehosting.com/data/v3.json?key=mrAd6GSd7v7Oc7PXFwwp"
+      "url": "https://maps.tilehosting.com/data/v3.json?key=mrAd6GSd7v7Oc7PXFwwp"
     },
     "mapbox-streets": {
       "type": "vector",
