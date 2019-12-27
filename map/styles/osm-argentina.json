@@ -27,7 +27,7 @@
       "url": "mapbox://mapbox.mapbox-streets-v7"
     }
   },
-  "sprite": "http://osmargentina.org/map/styles/sprites/osm-liberty",
+  "sprite": "https://openstreetmap.org.ar/map/styles/sprites/osm-liberty",
   "glyphs": "https://orangemug.github.io/font-glyphs/glyphs/{fontstack}/{range}.pbf",
   "layers": [
     {
