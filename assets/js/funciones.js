@@ -33,7 +33,7 @@ $(document).ready(function () {
 		}
 	});
 
-	eclipse(); // inicia la capa de eclipse por defecto
+/* 	eclipse(); // inicia la capa de eclipse por defecto
 	$('#eclipse-solar-2019').click(function (e) {
 		if ($(this).is(':checked') == true) {
 			eclipse();
@@ -44,7 +44,7 @@ $(document).ready(function () {
 			map.removeSource("umbra");
 		}
 	});
-
+ */
 	$('#chk_sup_calles').click(function (e) {
 		if ($(this).is(':checked') == true) {
 			supCalles();
@@ -390,7 +390,7 @@ var d, h, m, horaUtc, umbraFilter;
 	function editarMapa() {
 		var z = Math.round(map.getZoom());
 		if (z > 15) {
-			var urlBase = 'http://www.openstreetmap.org/edit#map='
+			var urlBase = 'https://www.openstreetmap.org/edit#map='
 			var x = map.getCenter().lng;
 			var y = map.getCenter().lat;
 			var urlEdit = urlBase + z + '/' + y + '/' + x;
