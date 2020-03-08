@@ -20,7 +20,7 @@
     },
     "openmaptiles": {
       "type": "vector",
-      "url": "https://maps.tilehosting.com/data/v3.json?key=mrAd6GSd7v7Oc7PXFwwp"
+      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=mrAd6GSd7v7Oc7PXFwwp"
     },
     "mapbox-streets": {
       "type": "vector",
