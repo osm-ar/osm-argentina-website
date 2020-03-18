@@ -75,6 +75,9 @@ header nav{
     height: 30px;
     margin: 12.5px 0;
   }
+  .small-logo{
+    display: none;
+  }
   .nav-buttons{
     display: block;
     float: none;
