@@ -71,9 +71,12 @@ header nav{
     background: #0B3954;
     left: -100%
   }
-  .big-logo{
+  .small-logo{
     height: 30px;
     margin: 12.5px 0;
+  }
+  .big-logo{
+    display: none;
   }
   .nav-buttons{
     display: block;
@@ -106,7 +109,7 @@ header nav{
 }
 
 @media screen and (max-width:451px){
-  .small-logo{
+  .big-logo{
     height: 30px;
     margin: 12.5px 0;
   }
