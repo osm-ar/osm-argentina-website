@@ -18,8 +18,8 @@
     content="width-device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <script src="assets/js/nav.js"></script>
 
-  <!-- Friconix -->
-  <script defer src="https://friconix.com/cdn/friconix.js"> </script>
+  <!-- Font Awesome -->
+  <script defer src="/assets/font/fontawesome/js/all.js"></script>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
   <div class="menu-bar">
     <img src="assets/img/small-logo.svg" class="small-logo">
     <!--<span class="big-logo tx-white"><span class="icon-map"></span>OpenStreetMap Argentina</span>-->
-    <a href="#" class="menu-button tx-white"><i class="fi-xnsuxl-three-bars-solid"></i></span></a>
+    <a href="#" class="menu-button tx-white"><i class="fas fa-bars"></i></span></a>
   </div>
   <header>
     <nav>
@@ -46,34 +46,49 @@
           <li><a href="http://geolibres.org.ar/" target="_blank" class="tx-white"><span class="icon-help"></span>GeoLibres</a></li>
           -->
           <li><a href="http://umap.openstreetmap.fr/es/map/sistema-de-salud-argentina-covid19_437454"
-              class="tx-white"><i class="fi-xnsuxm-plaster-cross-solid"></i> COVID-19</a></li>
-          <li><a id="editarMapa" href="#" target="_blank" class="tx-white"><i class="fi-xnsuxm-edit-solid"></i> Editá el
+              class="tx-white"><i class="fas fa-virus"></i> COVID-19</a></li>
+          <li><a id="editarMapa" href="#" target="_blank" class="tx-white"><i class="fas fa-edit"></i> Editá el
               mapa</a></li>
-          <li><a href="http://enosm.openstreetmap.org.ar/" class="tx-white"><i class="fi-xnsuxm-map-marker-solid"></i>
+          <li><a href="http://enosm.openstreetmap.org.ar/" class="tx-white"><i class="fas fa-store-alt"></i>
               Agregá una tienda</a></li>
-          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Argentina" class="tx-white"><i
-                class="fi-xnsuxm-team-solid"></i> Sumate a la comunidad</a></li>
+          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Argentina" class="tx-white"><i class="fas fa-users"></i>
+              Sumate a la comunidad</a></li>
         </ul>
       </div>
     </nav>
   </header>
   <div id="map"></div>
   <div id="mapa" class="section scrollspy"></div>
-  <button id="panelToggle" class="btn-panel panelToggle" onclick="ocultarPanel()"><i class="fi-cnluxl-globe-solid"></i></button>
+  <button id="panelToggle" class="btn-panel panelToggle" onclick="ocultarPanel()"><i
+      class="fas fa-layer-group"></i></button>
   <section id="panel" class="capas oculto">
     <div id=menuDatos class="datosMenu formulario">
       <div id='menuMapaBase'>
-        <input id='osm' type='checkbox' name='rtoggle' value='osm' checked='checked'>
-        <label for='osm' title='Capas de datos de OSM'>OpenStreetMap</label><br />
-        <input id='satelite' type='checkbox' name='rtoggle' value='satelite'>
-        <label for='satelite'>Satélite</label><br />
+        <div class="map-options">
+          <input id='osm' type='checkbox' name='rtoggle' value='osm' checked='checked'>
+          <label for='osm' title='Capas de datos de OSM'>
+            <div class="sel-marco marco-map"></div>
+            OpenStreetMap
+          </label>
+          <br/>
+          <input id='satelite' type='checkbox' name='rtoggle' value='satelite'>
+          <label for='satelite'>
+            <div class="sel-marco marco-sat"></div>
+            Satélite
+          </label>
+          <br />
+        </div>
+        
         <!--
           <input id='eclipse-solar-2019' type='checkbox' name='rtoggle' value='eclipse-solar-2019' checked='checked'>
           <label for='eclipse-solar-2019'>Eclipse solar 2019 <img src="assets/img/eclipse_chico.png" style="width:10%;margin:-4px 0"></label><br/> 
         -->
         <input id='chk_sup_calles' type='checkbox' name='rtoggle' value='chk_sup_calles'>
-        <label for='chk_sup_calles'>Calles <span style="background-color: #d742f5">con</span> y <span
-            style="background-color: #e87400">sin</span> pavimento</label><br />
+        <label for='chk_sup_calles'>Calles
+          <span style="background-color: #d742f5; padding: 1px 3px; border-radius: 8px; color: #fff;">con</span>
+          y
+          <span style="background-color: #e87400; padding: 1px 3px; border-radius: 8px; color: #fff;">sin</span>
+          pavimento</label><br />
       </div>
       <!-- 
       <div id='menuCapas'>
