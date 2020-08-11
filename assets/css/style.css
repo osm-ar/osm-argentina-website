@@ -140,6 +140,7 @@ header nav{
   background: rgba(255,255,255,.5);
   padding: 10px;
   box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 5px;
 }
 
 .formulario label {
@@ -147,7 +148,7 @@ header nav{
   cursor: pointer;
   color: #0074D9;
   position: relative;
-  padding: 5px 15px 5px 51px;
+  padding: 5px 15px;
   font-size: 1em;
   border-radius: 5px;
   -webkit-transition: all 0.3s ease;
@@ -158,6 +159,7 @@ header nav{
 .formulario label:hover {
   background: rgba(0, 116, 217, 0.1);
 }
+/*
 label:before {
   content: "";
   display: inline-block;
@@ -169,6 +171,33 @@ label:before {
   background: none;
   border: 3px solid #0074D9;
 }
+*/
+
+.map-options{
+  display: flex;
+  text-align: center;
+}
+
+.sel-marco{
+  border-radius: 5px;
+  height: 60px;
+  width: 60px;
+  border: 2px solid #0074D9;
+  margin: auto;
+}
+
+.marco-map{
+  background-image: url('../img/map.png');
+  background-position: center;
+  background-size: cover;
+}
+
+.marco-sat{
+  background-image: url('../img/satellite.png');
+  background-position: center;
+  background-size: cover;
+}
+
 input[type="radio"] {
   display: none;
 }
@@ -190,7 +219,6 @@ input[type="checkbox"]:checked + label:before {
 input[type="checkbox"]:checked + label {
   background: #0074D9;
   color: #fff;
-  padding: 5px 15px;
 }
 
 @media screen and (min-width: 600px){
