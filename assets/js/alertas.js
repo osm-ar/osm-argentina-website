@@ -1,5 +1,8 @@
+/*
 Swal.fire({
-    title: 'MAPA INTERACTIVO COVID-19',
-    text: 'Te presentamos el nuevo mapa de soporte de datos y visualización para el proyecto de mapeo de OpenStreetMap Argentina relacionado a la actual pandemia del Covid-19. Puede visitarlo haciendo clic en el enlace \"COVID-19\" del menú.',
-    confirmButtonAlert: 'CONTINUAR A OSM ARGENTINA'
+    imageUrl: 'assets/img/coronaton.png',
+    html:
+        'El próximo <b>Sábado</b> y <b>Domingo</b> estaremos mapeando <u>centros de salud de las zonas más afectadas por el Coronavirus</u>, mas info haciendo <a href="https://wiki.openstreetmap.org/wiki/ES:Argentina/Eventos/Mapat%C3%B3n_Salud_2020">clic aquí</a>',
+    button: "CONTINUAR A OSM ARGENTINA"
 })
+*/
