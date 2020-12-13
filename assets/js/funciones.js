@@ -163,9 +163,11 @@ $(document).ready(function () {
 	}
 
 	function filterBy(hora) {
-		var filters = ['==', 'hora', horas[hora]];
+		let filters = ['==', 'hora', horas[hora]],
+			_zoom = map.getZoom(),
+			_center = features[horas[hora]];
 		map.setFilter('umbra', filters);
-		map.setCenter(features[horas[hora]]);
+		map.flyTo({ center: _center, zoom: _zoom});
 		// Etiqueta de hora
 		document.getElementById('hora').textContent = horas[hora];
 	}
