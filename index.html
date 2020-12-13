@@ -28,13 +28,15 @@
       <img src="assets/img/big-logo.svg" class="big-logo">
       <div class="nav-buttons">
         <ul>
-          <li><a href="https://umap.openstreetmap.fr/es/map/sistema-de-salud-argentina-covid19_437454"
+          <li><a href="https://umap.openstreetmap.fr/es/map/sistema-de-salud-argentina-covid19_437454" target="_blank"
               class="tx-white"><i class="fas fa-virus"></i> COVID-19</a></li>
-          <li><a id="editarMapa" href="#" target="_blank" class="tx-white"><i class="fas fa-edit"></i> Editá el
-              mapa</a></li>
-          <li><a href="https://enosm.openstreetmap.org.ar/" class="tx-white"><i class="fas fa-store-alt"></i>
+          <li><a id="editarMapa" href="#" target="_blank" class="tx-white"><i class="fas fa-edit"></i> Editá el mapa</a>
+          </li>
+          <li><a href="https://enosm.openstreetmap.org.ar/" target="_blank" class="tx-white"><i
+                class="fas fa-store-alt"></i>
               Agregá una tienda</a></li>
-          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Argentina" class="tx-white"><i class="fas fa-users"></i>
+          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Argentina" target="_blank" class="tx-white"><i
+                class="fas fa-users"></i>
               Sumate a la comunidad</a></li>
         </ul>
       </div>
@@ -62,10 +64,11 @@
           <br />
         </div>
 
-        <!--
-          <input id='eclipse-solar-2019' type='checkbox' name='rtoggle' value='eclipse-solar-2019' checked='checked'>
-          <label for='eclipse-solar-2019'>Eclipse solar 2019 <img src="assets/img/eclipse_chico.png" style="width:10%;margin:-4px 0"></label><br/> 
-        -->
+
+        <input id='eclipse-solar' type='checkbox' name='rtoggle' value='eclipse-solar' checked='checked'>
+        <label for='eclipse-solar'>Eclipse solar 2020 <img src="assets/img/eclipse_chico.png"
+            style="width:10%;margin:-4px 0"></label><br />
+
         <input id='chk_sup_calles' type='checkbox' name='rtoggle' value='chk_sup_calles'>
         <label for='chk_sup_calles'>Calles
           <span style="background-color: #d742f5; padding: 1px 3px; border-radius: 8px; color: #fff;">con</span>
@@ -88,7 +91,7 @@
     } else {
       var map = new mapboxgl.Map({
         container: 'map',
-        style: 'map/styles/osm-argentina.json',
+        style: 'map/styles/osm-argentina-min.json',
         center: [-63.0, -44.8],
         zoom: 3,
         hash: true,
@@ -115,7 +118,7 @@
     ga('send', 'pageview');
   </script>
   <script src="assets/js/buscador.min.js"></script>
-  <script src="assets/js/funciones.js"></script>
+  <script src="assets/js/funciones.min.js"></script>
   <!--SweetAlert2.js-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="assets/js/alertas.js"></script>
