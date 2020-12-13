@@ -163,11 +163,38 @@ $(document).ready(function () {
 	}
 
 	function filterBy(hora) {
-		var filters = ['==', 'hora', horas[hora]];
+		let filters = ['==', 'hora', horas[hora]],
+			_zoom = map.getZoom(),
+			_center = features[horas[hora]];
+
 		map.setFilter('umbra', filters);
-		map.setCenter(features[horas[hora]]);
+		map.flyTo({ center: _center, zoom: _zoom });
+
 		// Etiqueta de hora
-		document.getElementById('hora').textContent = horas[hora];
+		let timeLabel = document.getElementById('hora'),
+			timeArray = horas[hora].split(':');
+		if (!isNaN(timeArray[0])) {
+			let d = new Date(),
+				timeDiff = d.getTimezoneOffset() / 60,
+				utcTimeStr = horas[hora] + ' (UTC)',
+				localHour = timeArray[0] - timeDiff + ':' + timeArray[1],
+				localTimeStr = localHour,
+				timeDiffStr;
+			switch (Math.sign(timeDiff)) {
+				case 1:
+					timeDiffStr = ` (-${timeDiff})`;
+					break;
+				case -1:
+					timeDiffStr = ` (+${timeDiff * -1})`;
+					break;
+				default:
+					timeDiffStr = '';
+					break;
+			}
+			timeLabel.textContent = localTimeStr + `${timeDiffStr} || ` + utcTimeStr;
+		} else {
+			timeLabel.textContent = horas[hora];
+		}
 	}
 
 	function eclipse() {
