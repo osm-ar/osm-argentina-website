@@ -154,8 +154,9 @@ $(document).ready(function () {
 	}
 
 	function addSlider() {
-		let title = 'Eclipse solar 2020',
-			htmlStr = `<div class="map-overlay-inner"><h2>${title}</h2><label id="hora"></label><input id="slider" type="range" min="0" max="${horas.length - 1}" step="1" value="50" /></div>`;
+		let title = 'Eclipse solar 14 de diciembre de 2020',
+			umbraNote = 'El ícono de la sombra muestra la ubicación, no su tamaño real',
+			htmlStr = `<div class="map-overlay-inner"><h2>${title}</h2><label id="hora"></label><input id="slider" type="range" min="0" max="${horas.length - 1}" step="1" value="50" />${umbraNote}</div>`;
 		timeSlider = document.createElement('div');
 		timeSlider.classList.add("map-overlay");
 		timeSlider.innerHTML = htmlStr;
@@ -179,13 +180,15 @@ $(document).ready(function () {
 				utcTimeStr = horas[hora] + ' (UTC)',
 				localHour = timeArray[0] - timeDiff + ':' + timeArray[1],
 				localTimeStr = localHour,
-				timeDiffStr;
+				timeDiffStr,
+				tzFullName = d.toLocaleDateString(undefined, { timeZoneName: 'long' }),
+				tzName = tzFullName.substr(tzFullName.search(' '));
 			switch (Math.sign(timeDiff)) {
 				case 1:
-					timeDiffStr = ` (-${timeDiff})`;
+					timeDiffStr = ` (-${timeDiff} ${tzName})`;
 					break;
 				case -1:
-					timeDiffStr = ` (+${timeDiff * -1})`;
+					timeDiffStr = ` (+${timeDiff * -1} ${tzName})`;
 					break;
 				default:
 					timeDiffStr = '';
@@ -268,6 +271,7 @@ $(document).ready(function () {
 	map.on('load', function () {
 		addSlider();
 		eclipse(); // inicia la capa de eclipse por defecto
+		addSky();
 	});
 
 	/* Eclipse 2019
@@ -528,35 +532,36 @@ $(document).ready(function () {
 		map.fitBounds([[-79.83, -35.68], [-56.27, -26.47]]);
 	}
 
-
-	map.addLayer({
-		'id': 'sky',
-		'type': 'sky',
-		'paint': {
-			// set up the sky layer to use a color gradient
-			'sky-type': 'gradient',
-			'sky-gradient': [
-				'interpolate',
-				['linear'],
-				['sky-radial-progress'],
-				0.8,
-				'rgba(135, 206, 235, 1.0)',
-				1,
-				'rgba(0,0,0,0.1)'
-			],
-			'sky-gradient-center': [0, 0],
-			'sky-gradient-radius': 90,
-			'sky-opacity': [
-				'interpolate',
-				['exponential', 0.1],
-				['zoom'],
-				5,
-				0,
-				22,
-				1
-			]
-		}
-	});
+	function addSky() {
+		map.addLayer({
+			'id': 'sky',
+			'type': 'sky',
+			'paint': {
+				// set up the sky layer to use a color gradient
+				'sky-type': 'gradient',
+				'sky-gradient': [
+					'interpolate',
+					['linear'],
+					['sky-radial-progress'],
+					0.8,
+					'rgba(135, 206, 235, 1.0)',
+					1,
+					'rgba(0,0,0,0.1)'
+				],
+				'sky-gradient-center': [0, 0],
+				'sky-gradient-radius': 90,
+				'sky-opacity': [
+					'interpolate',
+					['exponential', 0.1],
+					['zoom'],
+					5,
+					0,
+					22,
+					1
+				]
+			}
+		});
+	}
 
 	function editarMapa() {
 		var z = Math.round(map.getZoom());
