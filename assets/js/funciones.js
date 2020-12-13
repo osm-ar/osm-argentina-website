@@ -1,4 +1,4 @@
-let features = {};
+let features = {}, dataLayers = [];
 $(document).ready(function () {
 	function visibilidadOsm(valor) {
 		var capas = map.style._order;
@@ -252,6 +252,9 @@ $(document).ready(function () {
 					"icon-size": 0.35
 				}
 			});
+
+			dataLayers.push("umbra");
+			dataLayers.push("penumbra");
 		}
 		dataFilter();
 		addEclipseSrc();
@@ -594,7 +597,7 @@ $(document).ready(function () {
 function opacidad(valor) {
 	var capas = map.style._order;
 	for (var i = capas.length - 1; i >= 0; i--) {
-		if (map.getLayer(capas[i]).type == 'fill') {
+		if (map.getLayer(capas[i]).type == 'fill' && dataLayers.indexOf(capas[i]) < 0) {
 			map.setPaintProperty(capas[i], 'fill-opacity', valor);
 		}
 	}
