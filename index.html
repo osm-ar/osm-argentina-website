@@ -4,54 +4,39 @@
 <head>
   <title>OpenStreetMap Argentina</title>
   <meta charset="utf-8">
+  <meta name="viewport"
+    content="width-device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32" />
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
-  <!--<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
-    -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
   <link rel='stylesheet'
     href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css'
     type='text/css' />
-  <meta name="viewport"
-    content="width-device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <script src="assets/js/nav.js"></script>
-
-  <!-- Font Awesome -->
   <script defer src="/assets/font/fontawesome/js/all.js"></script>
 </head>
 
 <body>
-
-  <!-- Carga de capas -->
-  <!-- <script src='./map/capas/ign.json'></script> -->
-
   <div class="menu-bar">
     <img src="assets/img/small-logo.svg" class="small-logo">
-    <!--<span class="big-logo tx-white"><span class="icon-map"></span>OpenStreetMap Argentina</span>-->
     <a href="#" class="menu-button tx-white"><i class="fas fa-bars"></i></span></a>
   </div>
   <header>
     <nav>
       <img src="assets/img/big-logo.svg" class="big-logo">
-      <!--<span class="small-logo tx-white"><span class="icon-map"></span>OpenStreetMap Argentina</span>-->
       <div class="nav-buttons">
         <ul>
-          <!--
-	        <li><a href="http://sotm.openstreetmap.org.ar" target="_blank" class="tx-white"><span class="icon-map"></span>Conferencia State of the Map</a></li>
-          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Wikiproyecto_Argentina#Proyectos_locales" target="_blank" class="tx-white"><span class="icon-folder_open"></span>Proyectos</a></li>
-          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Wikiproyecto_Argentina#Descargas" target="_blank" class="tx-white"><span class="icon-cloud_download"></span>Descargas</a></li>
-          <li><a id="editarMapa" href="#" target="_blank" class="tx-white"><span class="icon-globe"></span>Editar el mapa</a></li>
-          <li><a href="http://geolibres.org.ar/" target="_blank" class="tx-white"><span class="icon-help"></span>GeoLibres</a></li>
-          -->
-          <li><a href="http://umap.openstreetmap.fr/es/map/sistema-de-salud-argentina-covid19_437454"
+          <li><a href="https://umap.openstreetmap.fr/es/map/sistema-de-salud-argentina-covid19_437454" target="_blank"
               class="tx-white"><i class="fas fa-virus"></i> COVID-19</a></li>
-          <li><a id="editarMapa" href="#" target="_blank" class="tx-white"><i class="fas fa-edit"></i> Editá el
-              mapa</a></li>
-          <li><a href="http://enosm.openstreetmap.org.ar/" class="tx-white"><i class="fas fa-store-alt"></i>
+          <li><a id="editarMapa" href="#" target="_blank" class="tx-white"><i class="fas fa-edit"></i> Editá el mapa</a>
+          </li>
+          <li><a href="https://enosm.openstreetmap.org.ar/" target="_blank" class="tx-white"><i
+                class="fas fa-store-alt"></i>
               Agregá una tienda</a></li>
-          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Argentina" class="tx-white"><i class="fas fa-users"></i>
+          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Argentina" target="_blank" class="tx-white"><i
+                class="fas fa-users"></i>
               Sumate a la comunidad</a></li>
         </ul>
       </div>
@@ -70,7 +55,7 @@
             <div class="sel-marco marco-map"></div>
             OpenStreetMap
           </label>
-          <br/>
+          <br />
           <input id='satelite' type='checkbox' name='rtoggle' value='satelite'>
           <label for='satelite'>
             <div class="sel-marco marco-sat"></div>
@@ -78,11 +63,12 @@
           </label>
           <br />
         </div>
-        
-        <!--
-          <input id='eclipse-solar-2019' type='checkbox' name='rtoggle' value='eclipse-solar-2019' checked='checked'>
-          <label for='eclipse-solar-2019'>Eclipse solar 2019 <img src="assets/img/eclipse_chico.png" style="width:10%;margin:-4px 0"></label><br/> 
-        -->
+
+
+        <input id='eclipse-solar' type='checkbox' name='rtoggle' value='eclipse-solar' checked='checked'>
+        <label for='eclipse-solar'>Eclipse solar 2020 <img src="assets/img/eclipse_chico.png"
+            style="width:10%;margin:-4px 0"></label><br />
+
         <input id='chk_sup_calles' type='checkbox' name='rtoggle' value='chk_sup_calles'>
         <label for='chk_sup_calles'>Calles
           <span style="background-color: #d742f5; padding: 1px 3px; border-radius: 8px; color: #fff;">con</span>
@@ -90,22 +76,7 @@
           <span style="background-color: #e87400; padding: 1px 3px; border-radius: 8px; color: #fff;">sin</span>
           pavimento</label><br />
       </div>
-      <!-- 
-      <div id='menuCapas'>
-          <input id='chk_edificios_3d' type='checkbox' name='rtoggle' value='chk_edificios_3d'>
-          <label for='chk_edificios_3d'>Edificios 3D</label><br/>
-          <input id='chk_colectivos' type='checkbox' name='rtoggle' value='chk_colectivos'>
-          <label for='chk_colectivos'>Colectivos</label><br/>
-          <input id='chk_red_vial' type='checkbox' name='rtoggle' value='chk_red_vial'>
-          <label for='chk_red_vial'>Red vial IGN</label><br/>
-          <input id='chk_corriente_agua_l' type='checkbox' name='rtoggle' value='chk_corriente_agua_l'>
-          <label for='chk_corriente_agua_l'>Corriente de Agua IGN</label><br/>
-          <input id='chk_espejo_agua' type='checkbox' name='rtoggle' value='chk_espejo_agua'>
-          <label for='chk_espejo_agua'>Espejo de Agua IGN</label><br/>
-          <input id='chk_municipios' type='checkbox' name='rtoggle' value='chk_municipios'>
-          <label for='chk_municipios'>Municipios IGN</label>
-      </div>
--->
+
       <button id='btnPanelDatos' class="btn-panel">Ver datos de objetos</button>
       <section class="col-3 col-m-2">
         <pre id='features' class="oculto"></pre>
@@ -120,7 +91,7 @@
     } else {
       var map = new mapboxgl.Map({
         container: 'map',
-        style: 'map/styles/osm-argentina.json',
+        style: 'map/styles/osm-argentina-min.json',
         center: [-63.0, -44.8],
         zoom: 3,
         hash: true,
@@ -147,7 +118,7 @@
     ga('send', 'pageview');
   </script>
   <script src="assets/js/buscador.min.js"></script>
-  <script src="assets/js/funciones.js"></script>
+  <script src="assets/js/funciones.min.js"></script>
   <!--SweetAlert2.js-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="assets/js/alertas.js"></script>

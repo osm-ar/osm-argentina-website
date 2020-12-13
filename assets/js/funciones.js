@@ -1,5 +1,5 @@
+let features = {};
 $(document).ready(function () {
-
 	function visibilidadOsm(valor) {
 		var capas = map.style._order;
 		for (var i = capas.length - 1; i >= 0; i--) {
@@ -33,18 +33,20 @@ $(document).ready(function () {
 		}
 	});
 
-/* 	eclipse(); // inicia la capa de eclipse por defecto
-	$('#eclipse-solar-2019').click(function (e) {
+	$('#eclipse-solar').click(function (e) {
+		let eclipseSlider = document.getElementsByClassName('map-overlay')[0];
 		if ($(this).is(':checked') == true) {
 			eclipse();
+			eclipseSlider.setAttribute('style', 'visibility: true');
 		} else {
 			map.removeLayer("penumbra");
 			map.removeLayer("umbra");
 			map.removeSource("penumbra");
 			map.removeSource("umbra");
+			eclipseSlider.setAttribute('style', 'visibility: hidden');
 		}
 	});
- */
+
 	$('#chk_sup_calles').click(function (e) {
 		if ($(this).is(':checked') == true) {
 			supCalles();
@@ -131,21 +133,131 @@ $(document).ready(function () {
 		}
 	});
 
+	let horas = [
+		"Inicio", "14:34", "14:36", "14:38", "14:40", "14:42", "14:44", "14:46", "14:48", "14:50", "14:52", "14:54", "14:56", "14:58", "15:00", "15:02", "15:04", "15:06", "15:08", "15:10", "15:12", "15:14", "15:16", "15:18", "15:20", "15:22", "15:24", "15:26", "15:28", "15:30", "15:32", "15:34", "15:36", "15:38", "15:40", "15:42", "15:44", "15:46", "15:48", "15:50", "15:52", "15:54", "15:56", "15:58", "16:00", "16:02", "16:04", "16:06", "16:08", "16:10", "16:12", "16:14", "16:16", "16:18", "16:20", "16:22", "16:24", "16:26", "16:28", "16:30", "16:32", "16:34", "16:36", "16:38", "16:40", "16:42", "16:44", "16:46", "16:48", "16:50", "16:52", "16:54", "16:56", "16:58", "17:00", "17:02", "17:04", "17:06", "17:08", "17:10", "17:12", "17:14", "17:16", "17:18", "17:20", "17:22", "17:24", "17:26", "17:28", "17:30", "17:32", "17:34", "17:36", "17:38", "17:40", "17:42", "17:44", "17:46", "17:48", "17:50", "17:52", "17:54", "Fin"];
 
+	function dataFilter() {
+		fetch('map/capas/eclipse-solar-2020-umbra.geojson')
+			.then(function (response) {
+				return response.text();
+			})
+			.then(function (data) {
+				let geojson = JSON.parse(data);
+				geojson.features.forEach(feature => {
+					features[feature.properties.hora] = feature.geometry.coordinates;
+				});
+				//console.log(geojson.features);
+			})
+			.catch(function (err) {
+				console.error(err);
+			});
+	}
+
+	function addSlider() {
+		let title = 'Eclipse solar 2020',
+			htmlStr = `<div class="map-overlay-inner"><h2>${title}</h2><label id="hora"></label><input id="slider" type="range" min="0" max="${horas.length - 1}" step="1" value="50" /></div>`;
+		timeSlider = document.createElement('div');
+		timeSlider.classList.add("map-overlay");
+		timeSlider.innerHTML = htmlStr;
+		document.body.append(timeSlider);
+	}
+
+	function filterBy(hora) {
+		var filters = ['==', 'hora', horas[hora]];
+		map.setFilter('umbra', filters);
+		map.setCenter(features[horas[hora]]);
+		// Etiqueta de hora
+		document.getElementById('hora').textContent = horas[hora];
+	}
+
+	function eclipse() {
+
+		function addEclipseSrc() {
+			map.addSource("penumbra", {
+				"type": "geojson",
+				"data": "map/capas/eclipse-solar-2020-penumbra.geojson",
+				"attribution": "<a href='https://es.wikipedia.org/wiki/Eclipse_solar_del_14_de_diciembre_de_2020' target='_blank'>Wikipedia</a>"
+			});
+			map.addSource("umbra", {
+				"type": "geojson",
+				"data": "map/capas/eclipse-solar-2020-umbra.geojson",
+				"attribution": "<a href='https://moonblink.info/Eclipse/eclipse/2020_12_14' target='_blank'>© Moonblink by Ian Cameron Smith</a>"
+			});
+		}
+		function addEclipseLyrs() {
+			/* map.addLayer({
+				"id": "texto-penumbra",
+				"type": "symbol",
+				"source": "penumbra",
+				"layout": {
+					"text-field": ["get", "name"],
+					"text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+					"text-justify": "auto"
+				}
+			}); */
+			map.addLayer({
+				"id": "penumbra",
+				"type": "fill",
+				"source": "penumbra",
+				"paint": {
+					"fill-color": '#000000',
+					"fill-opacity": 0.05,
+				}
+			});
+			if (!map.hasImage('eclipse')) {
+				map.loadImage(
+					'assets/img/eclipse_chico.png',
+					function (error, image) {
+						if (error) throw error;
+						map.addImage('eclipse', image)
+					});
+			}
+
+			map.addLayer({
+				"id": "umbra",
+				"type": "symbol",
+				"source": "umbra",
+				"layout": {
+					"icon-image": "eclipse",
+					"icon-size": 0.35
+				}
+			});
+		}
+		dataFilter();
+		addEclipseSrc();
+		addEclipseLyrs();
+
+		// Inicia filtro
+		filterBy(50);
+
+		document
+			.getElementById('slider')
+			.addEventListener('input', function (e) {
+				var hora = parseInt(e.target.value, 10);
+				filterBy(hora);
+			});
+	}
+
+	map.on('load', function () {
+		addSlider();
+		eclipse(); // inicia la capa de eclipse por defecto
+	});
+
+	/* Eclipse 2019
 	function addZero(i) {
 		if (i < 10) {
 			i = "0" + i;
 		}
 		return i;
 	}
-
-var d, h, m, horaUtc, umbraFilter;
+	
+	var d, h, m, horaUtc, umbraFilter;
 	function eclipse() {
 		d = new Date();
 		h = addZero(d.getUTCHours());
 		m = addZero(d.getUTCMinutes());
 		horaUtc = h + ':' + m + ':' + '00';
-
+	
 		// Actualiza el filtro de la sombra cada 10 seg reflejando la nueva hora
 		window.setInterval(function () {
 			d = new Date();
@@ -156,7 +268,7 @@ var d, h, m, horaUtc, umbraFilter;
 			umbraFilter = ["==", 'UTCTime', horaUtc];
 			map.setFilter('umbra', umbraFilter);
 		}, 10000);
-
+	
 		map.addSource("penumbra", {
 			"type": "geojson",
 			"data": "map/capas/eclipse-penumbra-2019.geojson",
@@ -171,16 +283,16 @@ var d, h, m, horaUtc, umbraFilter;
 				"fill-opacity": 0.05,
 			}
 		});
-		/* 		map.addLayer({
-					"id": "texto-penumbra",
-					"type": "symbol",
-					"source": "penumbra",
-					"layout": {
-						"text-field": ["get", "name"],
-						"text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-						"text-justify": "auto"
-					}
-				}); */
+		map.addLayer({
+			"id": "texto-penumbra",
+			"type": "symbol",
+			"source": "penumbra",
+			"layout": {
+				"text-field": ["get", "name"],
+				"text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+				"text-justify": "auto"
+			}
+		});
 		map.addSource("umbra", {
 			"type": "geojson",
 			"data": "map/capas/eclipse-umbra-2019.geojson"
@@ -195,9 +307,10 @@ var d, h, m, horaUtc, umbraFilter;
 			},
 			"filter": ["==", "UTCTime", horaUtc]
 		});
-
+	
 		map.fitBounds([[-175.078125, -70.959697], [-40.781250, 8.754795]]);
 	}
+ */
 
 	function supCalles() {
 		map.addLayer(
@@ -362,6 +475,7 @@ var d, h, m, horaUtc, umbraFilter;
 			"filter": ["==", "$type", "Point"]
 		});
 
+
 		map.on('click', 'rutas', function (e) {
 			/*
 			console.log(popu);
@@ -386,6 +500,36 @@ var d, h, m, horaUtc, umbraFilter;
 
 		map.fitBounds([[-79.83, -35.68], [-56.27, -26.47]]);
 	}
+
+
+	map.addLayer({
+		'id': 'sky',
+		'type': 'sky',
+		'paint': {
+			// set up the sky layer to use a color gradient
+			'sky-type': 'gradient',
+			'sky-gradient': [
+				'interpolate',
+				['linear'],
+				['sky-radial-progress'],
+				0.8,
+				'rgba(135, 206, 235, 1.0)',
+				1,
+				'rgba(0,0,0,0.1)'
+			],
+			'sky-gradient-center': [0, 0],
+			'sky-gradient-radius': 90,
+			'sky-opacity': [
+				'interpolate',
+				['exponential', 0.1],
+				['zoom'],
+				5,
+				0,
+				22,
+				1
+			]
+		}
+	});
 
 	function editarMapa() {
 		var z = Math.round(map.getZoom());
