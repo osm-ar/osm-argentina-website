@@ -1,4 +1,70 @@
 let features = {}, dataLayers = [];
+
+function metersPerPixel(latitude, zoomLevel) {
+	var earthCircumference = 40075017;
+	var latitudeRadians = latitude * (Math.PI / 180);
+	return earthCircumference * Math.cos(latitudeRadians) / Math.pow(2, zoomLevel + 8);
+};
+function pixelValue(latitude, meters, zoomLevel) {
+	return meters / metersPerPixel(latitude, zoomLevel);
+};
+function createGeoJSONCircle(center, radiusInKm, points) {
+	if (!points) points = 64;
+
+	var coords = {
+		latitude: center[1],
+		longitude: center[0]
+	};
+
+	var km = radiusInKm;
+
+	var ret = [];
+	var distanceX = km / (111.320 * Math.cos(coords.latitude * Math.PI / 180));
+	var distanceY = km / 110.574;
+
+	var theta, x, y;
+	for (var i = 0; i < points; i++) {
+		theta = (i / points) * (2 * Math.PI);
+		x = distanceX * Math.cos(theta);
+		y = distanceY * Math.sin(theta);
+
+		ret.push([coords.longitude + x, coords.latitude + y]);
+	}
+	ret.push(ret[0]);
+
+	return {
+		"type": "geojson",
+		"data": {
+			"type": "FeatureCollection",
+			"features": [{
+				"type": "Feature",
+				"geometry": {
+					"type": "Polygon",
+					"coordinates": [ret]
+				}
+			}]
+		}
+	};
+};
+
+function createCircleLayer(center, radiusInKm, points, color, opacity, overlay) {
+	map.addSource("polygon", createGeoJSONCircle(center, radiusInKm, points));
+
+	map.addLayer({
+		"id": "polygon",
+		"type": "fill",
+		"source": "polygon",
+		"layout": {},
+		"paint": {
+			"fill-color": color,
+			"fill-opacity": opacity,
+			"fill-outline-color": "gray"
+		}
+	},
+		overlay
+	);
+}
+
 $(document).ready(function () {
 	function visibilidadOsm(valor) {
 		var capas = map.style._order;
@@ -144,9 +210,13 @@ $(document).ready(function () {
 			.then(function (data) {
 				let geojson = JSON.parse(data);
 				geojson.features.forEach(feature => {
-					features[feature.properties.hora] = feature.geometry.coordinates;
+					features[feature.properties.hora] = {
+						coords: feature.geometry.coordinates,
+						properties: feature.properties
+					};
 				});
-				//console.log(geojson.features);
+				// Inicia filtro
+				filterBy(50);
 			})
 			.catch(function (err) {
 				console.error(err);
@@ -166,9 +236,38 @@ $(document).ready(function () {
 	function filterBy(hora) {
 		let filters = ['==', 'hora', horas[hora]],
 			_zoom = map.getZoom(),
-			_center = features[horas[hora]];
+			_center = features[horas[hora]].coords,
+			_ancho = parseInt(features[horas[hora]].properties.ancho, 10) / 2,
+			ancho;
+
+		//ancho = pixelValue(_center[1], _anchoMts, _zoom);
+		//createGeoJSONCircle(_center, _ancho, 64);
+		/* 		map.addSource("polygon", createGeoJSONCircle(_center, _ancho, 64));
+		
+				map.addLayer({
+					"id": "polygon",
+					"type": "fill",
+					"source": "polygon",
+					"layout": {},
+					"paint": {
+						"fill-color": "blue",
+						"fill-opacity": 0.6
+					}
+				});
+		 */
+
+		if (!map.getSource('polygon')) {
+			createCircleLayer(_center, _ancho, 64, '#000000', 0.7, 'umbra');
+			dataLayers.push("polygon");
+		} else {
+			map.getSource('polygon')
+				.setData(createGeoJSONCircle(_center, _ancho).data);
+		}
+
 
 		map.setFilter('umbra', filters);
+		//map.setFilter('umbra-circle', filters);
+		//map.setPaintProperty('umbra-circle', 'circle-radius', 1);
 		map.flyTo({ center: _center, zoom: _zoom });
 
 		// Etiqueta de hora
@@ -231,7 +330,7 @@ $(document).ready(function () {
 				"source": "penumbra",
 				"paint": {
 					"fill-color": '#000000',
-					"fill-opacity": 0.05,
+					"fill-opacity": 0.05
 				}
 			});
 			if (!map.hasImage('eclipse')) {
@@ -242,6 +341,16 @@ $(document).ready(function () {
 						map.addImage('eclipse', image)
 					});
 			}
+			/* 
+						map.addLayer({
+							"id": "umbra-circle",
+							"type": "circle",
+							"source": "umbra",
+							"paint": {
+								"circle-color": "#000000",
+								"circle-opacity": 0.8
+							}
+						}); */
 
 			map.addLayer({
 				"id": "umbra",
@@ -261,7 +370,7 @@ $(document).ready(function () {
 		addEclipseLyrs();
 
 		// Inicia filtro
-		filterBy(50);
+		//filterBy(50);
 
 		document
 			.getElementById('slider')
