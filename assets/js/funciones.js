@@ -1,13 +1,16 @@
-let features = {}, dataLayers = [];
+let features = {},
+	dataLayers = [];
+horas = [
+	"Inicio", "14:34", "14:36", "14:38", "14:40", "14:42", "14:44", "14:46", "14:48", "14:50", "14:52", "14:54", "14:56", "14:58", "15:00", "15:02", "15:04", "15:06", "15:08", "15:10", "15:12", "15:14", "15:16", "15:18", "15:20", "15:22", "15:24", "15:26", "15:28", "15:30", "15:32", "15:34", "15:36", "15:38", "15:40", "15:42", "15:44", "15:46", "15:48", "15:50", "15:52", "15:54", "15:56", "15:58", "16:00", "16:02", "16:04", "16:06", "16:08", "16:10", "16:12", "16:14", "16:16", "16:18", "16:20", "16:22", "16:24", "16:26", "16:28", "16:30", "16:32", "16:34", "16:36", "16:38", "16:40", "16:42", "16:44", "16:46", "16:48", "16:50", "16:52", "16:54", "16:56", "16:58", "17:00", "17:02", "17:04", "17:06", "17:08", "17:10", "17:12", "17:14", "17:16", "17:18", "17:20", "17:22", "17:24", "17:26", "17:28", "17:30", "17:32", "17:34", "17:36", "17:38", "17:40", "17:42", "17:44", "17:46", "17:48", "17:50", "17:52", "17:54", "Fin"];
 
-function metersPerPixel(latitude, zoomLevel) {
+/* function metersPerPixel(latitude, zoomLevel) {
 	var earthCircumference = 40075017;
 	var latitudeRadians = latitude * (Math.PI / 180);
 	return earthCircumference * Math.cos(latitudeRadians) / Math.pow(2, zoomLevel + 8);
 };
 function pixelValue(latitude, meters, zoomLevel) {
 	return meters / metersPerPixel(latitude, zoomLevel);
-};
+}; */
 function createGeoJSONCircle(center, radiusInKm, points) {
 	if (!points) points = 64;
 
@@ -63,6 +66,143 @@ function createCircleLayer(center, radiusInKm, points, color, opacity, overlay) 
 	},
 		overlay
 	);
+}
+
+
+function dataFilter() {
+	fetch('map/capas/eclipse-solar-2020-umbra.geojson')
+		.then(function (response) {
+			return response.text();
+		})
+		.then(function (data) {
+			let geojson = JSON.parse(data);
+			geojson.features.forEach(feature => {
+				features[feature.properties.hora] = {
+					coords: feature.geometry.coordinates,
+					properties: feature.properties
+				};
+			});
+			bindButtons();
+			// Inicia filtro
+			filterBy(50);
+		})
+		.catch(function (err) {
+			console.error(err);
+		});
+}
+
+var filterBy = function (hora) {
+	let filters = ['==', 'hora', horas[hora]],
+		_zoom = map.getZoom(),
+		_center = features[horas[hora]].coords,
+		_ancho = parseInt(features[horas[hora]].properties.ancho, 10) / 2,
+		ancho;
+
+	if (!map.getSource('polygon')) {
+		createCircleLayer(_center, _ancho, 64, '#000000', 0.7, 'umbra');
+		dataLayers.push("polygon");
+	} else {
+		map.getSource('polygon')
+			.setData(createGeoJSONCircle(_center, _ancho).data);
+	}
+
+	map.setFilter('umbra', filters);
+	map.flyTo({ center: _center, zoom: _zoom });
+
+	// Etiqueta de hora
+	let timeLabel = document.getElementById('hora'),
+		timeArray = horas[hora].split(':');
+	if (!isNaN(timeArray[0])) {
+		let d = new Date(),
+			timeDiff = d.getTimezoneOffset() / 60,
+			utcTimeStr = horas[hora] + ' (UTC)',
+			localHour = timeArray[0] - timeDiff + ':' + timeArray[1],
+			localTimeStr = localHour,
+			timeDiffStr,
+			tzFullName = d.toLocaleDateString(undefined, { timeZoneName: 'long' }),
+			tzName = tzFullName.substr(tzFullName.search(' '));
+		switch (Math.sign(timeDiff)) {
+			case 1:
+				timeDiffStr = ` (-${timeDiff} ${tzName})`;
+				break;
+			case -1:
+				timeDiffStr = ` (+${timeDiff * -1} ${tzName})`;
+				break;
+			default:
+				timeDiffStr = '';
+				break;
+		}
+		timeLabel.textContent = localTimeStr + `${timeDiffStr} || ` + utcTimeStr;
+	} else {
+		timeLabel.textContent = horas[hora];
+	}
+	document.getElementById('slider').value = hora;
+}
+
+function move(to) {
+	let slider = document.getElementById('slider'),
+		hr = parseInt(slider.value, 10),
+		max = parseInt(slider.max, 10),
+		min = parseInt(slider.min, 10);
+	switch (to) {
+		case 'forward':
+			(hr < max) ? filterBy(hr + 1) : null;
+			break;
+		case 'backward':
+			(hr > min) ? filterBy(hr - 1) : null;
+			break;
+		case 'start':
+			filterBy(min);
+			break;
+		case 'end':
+			filterBy(max);
+			break;
+		default:
+			break;
+	}
+}
+
+/* 
+let	timer, counter = 0;
+function play() {
+	let slider = document.getElementById('slider'),
+		max = slider.max, min = slider.min;
+	if (slider.value != min) { move('start'); }
+	counter++;
+	if (counter < 0) timer = setTimeout(function () {
+			move('forward');
+	}, 0);
+}
+
+function stop() {
+	counter = -1;
+} */
+
+/* 
+function play() {
+	move('start');
+	let max = document.getElementById('slider').max;
+	for (let i = 0; i < max; i++) {
+		if (playing = false) { break; }
+		console.log(playing);
+		setTimeout(() => {
+			move('forward');
+		}, i * 2000);
+		playing = true;
+	}
+}
+
+function stop() {
+	playing = false;
+} */
+
+function bindButtons() {
+	let s = selector => document.getElementsByName(selector)[0];
+	//s('play').addEventListener('click', function () { play() });
+	s('start').addEventListener('click', function () { move('start') });
+	s('back').addEventListener('click', function () { move('backward') });
+	s('next').addEventListener('click', function () { move('forward') });
+	s('end').addEventListener('click', function () { move('end') });
 }
 
 $(document).ready(function () {
@@ -199,104 +339,14 @@ $(document).ready(function () {
 		}
 	});
 
-	let horas = [
-		"Inicio", "14:34", "14:36", "14:38", "14:40", "14:42", "14:44", "14:46", "14:48", "14:50", "14:52", "14:54", "14:56", "14:58", "15:00", "15:02", "15:04", "15:06", "15:08", "15:10", "15:12", "15:14", "15:16", "15:18", "15:20", "15:22", "15:24", "15:26", "15:28", "15:30", "15:32", "15:34", "15:36", "15:38", "15:40", "15:42", "15:44", "15:46", "15:48", "15:50", "15:52", "15:54", "15:56", "15:58", "16:00", "16:02", "16:04", "16:06", "16:08", "16:10", "16:12", "16:14", "16:16", "16:18", "16:20", "16:22", "16:24", "16:26", "16:28", "16:30", "16:32", "16:34", "16:36", "16:38", "16:40", "16:42", "16:44", "16:46", "16:48", "16:50", "16:52", "16:54", "16:56", "16:58", "17:00", "17:02", "17:04", "17:06", "17:08", "17:10", "17:12", "17:14", "17:16", "17:18", "17:20", "17:22", "17:24", "17:26", "17:28", "17:30", "17:32", "17:34", "17:36", "17:38", "17:40", "17:42", "17:44", "17:46", "17:48", "17:50", "17:52", "17:54", "Fin"];
-
-	function dataFilter() {
-		fetch('map/capas/eclipse-solar-2020-umbra.geojson')
-			.then(function (response) {
-				return response.text();
-			})
-			.then(function (data) {
-				let geojson = JSON.parse(data);
-				geojson.features.forEach(feature => {
-					features[feature.properties.hora] = {
-						coords: feature.geometry.coordinates,
-						properties: feature.properties
-					};
-				});
-				// Inicia filtro
-				filterBy(50);
-			})
-			.catch(function (err) {
-				console.error(err);
-			});
-	}
-
 	function addSlider() {
 		let title = 'Eclipse solar 14 de diciembre de 2020',
 			umbraNote = 'El ícono de la sombra muestra la ubicación, no su tamaño real',
-			htmlStr = `<div class="map-overlay-inner"><h2>${title}</h2><label id="hora"></label><input id="slider" type="range" min="0" max="${horas.length - 1}" step="1" value="50" />${umbraNote}</div>`;
+			htmlStr = `<div id="sliderPanel" class="map-overlay-inner"><h2>${title}</h2><div style="margin: auto; padding: 0; display: table;"><!--<button name="play" type="button"></button>--><button name="start" title="Inicio" type="button"><i class="fas fa-angle-double-left"></i></button><button name="back" title="Atrás" type="button"><i class="fas fa-angle-left"></i></button><button name="next" title="Adelante" type="button"><i class="fas fa-angle-right"></i></button><button name="end" title="Fin" type="button"><i class="fas fa-angle-double-right"></i></button></div></br><label id="hora"></label><input id="slider" type="range" min="0" max="${horas.length - 1}" step="1" value="50" />${umbraNote}</div>`;
 		timeSlider = document.createElement('div');
 		timeSlider.classList.add("map-overlay");
 		timeSlider.innerHTML = htmlStr;
 		document.body.append(timeSlider);
-	}
-
-	function filterBy(hora) {
-		let filters = ['==', 'hora', horas[hora]],
-			_zoom = map.getZoom(),
-			_center = features[horas[hora]].coords,
-			_ancho = parseInt(features[horas[hora]].properties.ancho, 10) / 2,
-			ancho;
-
-		//ancho = pixelValue(_center[1], _anchoMts, _zoom);
-		//createGeoJSONCircle(_center, _ancho, 64);
-		/* 		map.addSource("polygon", createGeoJSONCircle(_center, _ancho, 64));
-		
-				map.addLayer({
-					"id": "polygon",
-					"type": "fill",
-					"source": "polygon",
-					"layout": {},
-					"paint": {
-						"fill-color": "blue",
-						"fill-opacity": 0.6
-					}
-				});
-		 */
-
-		if (!map.getSource('polygon')) {
-			createCircleLayer(_center, _ancho, 64, '#000000', 0.7, 'umbra');
-			dataLayers.push("polygon");
-		} else {
-			map.getSource('polygon')
-				.setData(createGeoJSONCircle(_center, _ancho).data);
-		}
-
-
-		map.setFilter('umbra', filters);
-		//map.setFilter('umbra-circle', filters);
-		//map.setPaintProperty('umbra-circle', 'circle-radius', 1);
-		map.flyTo({ center: _center, zoom: _zoom });
-
-		// Etiqueta de hora
-		let timeLabel = document.getElementById('hora'),
-			timeArray = horas[hora].split(':');
-		if (!isNaN(timeArray[0])) {
-			let d = new Date(),
-				timeDiff = d.getTimezoneOffset() / 60,
-				utcTimeStr = horas[hora] + ' (UTC)',
-				localHour = timeArray[0] - timeDiff + ':' + timeArray[1],
-				localTimeStr = localHour,
-				timeDiffStr,
-				tzFullName = d.toLocaleDateString(undefined, { timeZoneName: 'long' }),
-				tzName = tzFullName.substr(tzFullName.search(' '));
-			switch (Math.sign(timeDiff)) {
-				case 1:
-					timeDiffStr = ` (-${timeDiff} ${tzName})`;
-					break;
-				case -1:
-					timeDiffStr = ` (+${timeDiff * -1} ${tzName})`;
-					break;
-				default:
-					timeDiffStr = '';
-					break;
-			}
-			timeLabel.textContent = localTimeStr + `${timeDiffStr} || ` + utcTimeStr;
-		} else {
-			timeLabel.textContent = horas[hora];
-		}
 	}
 
 	function eclipse() {
@@ -341,16 +391,6 @@ $(document).ready(function () {
 						map.addImage('eclipse', image)
 					});
 			}
-			/* 
-						map.addLayer({
-							"id": "umbra-circle",
-							"type": "circle",
-							"source": "umbra",
-							"paint": {
-								"circle-color": "#000000",
-								"circle-opacity": 0.8
-							}
-						}); */
 
 			map.addLayer({
 				"id": "umbra",
@@ -368,9 +408,6 @@ $(document).ready(function () {
 		dataFilter();
 		addEclipseSrc();
 		addEclipseLyrs();
-
-		// Inicia filtro
-		//filterBy(50);
 
 		document
 			.getElementById('slider')
