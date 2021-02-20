@@ -257,6 +257,9 @@ $(document).ready(function () {
 	$('#eclipse-solar').click(function (e) {
 		let eclipseSlider = document.getElementsByClassName('map-overlay')[0];
 		if ($(this).is(':checked') == true) {
+			if(eclipseSlider == null) {
+				addSlider();
+			}
 			eclipse();
 			eclipseSlider.setAttribute('style', 'visibility: true');
 		} else {
@@ -433,8 +436,6 @@ $(document).ready(function () {
 	}
 
 	map.on('load', function () {
-		addSlider();
-		eclipse(); // inicia la capa de eclipse por defecto
 		addSky();
 	});
 
