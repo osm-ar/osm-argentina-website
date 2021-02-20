@@ -257,7 +257,7 @@ $(document).ready(function () {
 	$('#eclipse-solar').click(function (e) {
 		let eclipseSlider = document.getElementsByClassName('map-overlay')[0];
 		if ($(this).is(':checked') == true) {
-			if(eclipseSlider == null) {
+			if (eclipseSlider == null) {
 				addSlider();
 			}
 			eclipse();
