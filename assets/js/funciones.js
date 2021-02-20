@@ -162,6 +162,21 @@ function move(to) {
 	}
 }
 
+function play() {
+	move('start');
+	while (playing === true) {
+		let max = document.getElementById('slider').max;
+		for (let i = 0; i < max; i++) {
+			if (playing = false) { break; }
+			console.log(playing);
+			setTimeout(() => {
+				move('forward');
+			}, i * 2000);
+			playing = true;
+		}
+	}
+}
+
 /* 
 let	timer, counter = 0;
 function play() {
