@@ -5274,7 +5274,7 @@
           ]
         },
         "text-anchor": "bottom",
-        "text-field": "{name_en}",
+        "text-field": "{name_es}",
         "text-font": [
           "Roboto Medium"
         ],
