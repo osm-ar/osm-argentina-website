@@ -1737,6 +1737,22 @@
       }
     },
     {
+      "id": "boundary_3",
+      "type": "line",
+      "metadata": {},
+      "source": "openmaptiles",
+      "source-layer": "boundary",
+      "minzoom": 3,
+      "filter": ["all", ["in", "admin_level", 3, 4]],
+      "layout": {"line-join": "round", "visibility": "visible"},
+      "paint": {
+        "line-color": "#cf9bcb",
+        "line-dasharray": [5, 1],
+        "line-width": {"base": 1, "stops": [[4, 0.4], [5, 1], [12, 1.8]]},
+        "line-opacity": 0.8
+      }
+    },
+    {
       "id": "road_ferry",
       "type": "line",
       "metadata": {},
@@ -1751,21 +1767,7 @@
       }
     },
     {
-      "id": "boundary_3",
-      "type": "line",
-      "metadata": {},
-      "source": "openmaptiles",
-      "source-layer": "boundary",
-      "filter": ["all", ["in", "admin_level", 3, 4]],
-      "layout": {"line-join": "round", "visibility": "visible"},
-      "paint": {
-        "line-color": "#cf9bcb",
-        "line-dasharray": [5, 1],
-        "line-width": {"base": 1, "stops": [[4, 0.4], [5, 1], [12, 1.8]]}
-      }
-    },
-    {
-      "id": "boundary_2-copy",
+      "id": "boundary_2-copy-copy",
       "type": "line",
       "metadata": {},
       "source": "mapbox-streets",
@@ -1796,14 +1798,19 @@
       "source": "openmaptiles",
       "source-layer": "boundary",
       "minzoom": 0,
-      "filter": ["all", ["==", "admin_level", 2]],
+      "filter": [
+        "all",
+        ["==", "admin_level", 2],
+        ["==", "adm0_l", "ARG"],
+        ["==", "adm0_r", "CHL"]
+      ],
       "layout": {
         "line-cap": "round",
         "line-join": "round",
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
-        "line-color": "hsl(248, 1%, 41%)",
+        "line-color": "#b29ac3",
         "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
         "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
       }
@@ -2497,19 +2504,35 @@
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "place",
-      "maxzoom": 6,
+      "minzoom": 3,
+      "maxzoom": 0,
       "filter": ["all", ["==", "class", "state"]],
       "layout": {
-        "text-field": "{name_en}",
+        "text-field": "{name:es}",
         "text-font": ["Roboto Condensed Italic"],
         "text-size": {"stops": [[4, 11], [6, 15]]},
-        "text-transform": "uppercase",
-        "visibility": "visible"
+        "text-transform": "none",
+        "visibility": "visible",
+        "text-pitch-alignment": "auto",
+        "symbol-avoid-edges": false,
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "text-rotation-alignment": "auto",
+        "text-max-width": 5,
+        "text-keep-upright": false,
+        "text-optional": false,
+        "icon-text-fit": "none",
+        "icon-pitch-alignment": "auto",
+        "symbol-placement": "point",
+        "symbol-z-order": "viewport-y",
+        "icon-padding": 1
       },
       "paint": {
         "text-color": "#633",
         "text-halo-color": "rgba(255,255,255,0.7)",
-        "text-halo-width": 1
+        "text-halo-width": 1,
+        "text-opacity": 0.7,
+        "text-translate-anchor": "map"
       }
     },
     {
