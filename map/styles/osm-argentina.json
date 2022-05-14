@@ -1272,6 +1272,7 @@
       "source": "mapbox-streets",
       "source-layer": "road",
       "minzoom": 0,
+      "maxzoom": 12,
       "filter": [
         "all",
         ["!in", "brunnel", "bridge", "tunnel"],
@@ -1280,11 +1281,11 @@
       "layout": {
         "line-cap": "round",
         "line-join": "round",
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
-        "line-color": "rgba(198, 197, 197, 1)",
-        "line-width": {"stops": [[10, 0], [11, 1]]}
+        "line-color": "rgba(210, 208, 208, 1)",
+        "line-width": {"stops": [[10, 0], [11, 0.5]]}
       }
     },
     {
@@ -2320,17 +2321,24 @@
         "text-anchor": "left",
         "text-field": "{name_en}",
         "text-font": ["Roboto Condensed Italic"],
-        "text-max-width": 9,
         "text-offset": [0.9, 0],
-        "text-padding": 2,
+        "text-padding": {"stops": [[6, 50], [18, 1]]},
         "text-size": 12,
-        "visibility": "visible"
+        "visibility": "visible",
+        "text-max-width": 6,
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "text-keep-upright": true,
+        "icon-size": 1,
+        "icon-padding": 1,
+        "icon-text-fit": "none"
       },
       "paint": {
         "text-color": "rgba(37, 118, 218, 1)",
         "text-halo-blur": 0.5,
         "text-halo-color": "#ffffff",
-        "text-halo-width": 0.75
+        "text-halo-width": 0.75,
+        "text-opacity": {"stops": [[6, 0], [16, 1]]}
       }
     },
     {
@@ -2362,25 +2370,53 @@
       }
     },
     {
-      "id": "road_label",
+      "id": "road_label-streets",
       "type": "symbol",
       "metadata": {},
       "source": "mapbox-streets",
       "source-layer": "road_label",
-      "filter": ["all", ["!=", "class", "ferry"]],
+      "minzoom": 13,
+      "filter": ["all", ["!in", "class", "ferry", "motorway", "trunk"]],
       "layout": {
         "symbol-placement": "line",
         "text-anchor": "center",
         "text-field": "{name}",
         "text-font": ["Roboto Regular"],
         "text-offset": [0, 0.15],
-        "text-size": {"base": 1, "stops": [[13, 12], [14, 13]]},
-        "visibility": "visible"
+        "text-size": {"base": 1, "stops": [[11, 7], [14, 13]]},
+        "visibility": "visible",
+        "text-letter-spacing": {"stops": [[11, 0.1], [14, 0]]}
       },
       "paint": {
         "text-color": "rgba(45, 43, 41, 1)",
         "text-halo-blur": 0.5,
         "text-halo-width": 1,
+        "text-halo-color": "rgba(255, 255, 255, 1)"
+      }
+    },
+    {
+      "id": "road_label",
+      "type": "symbol",
+      "metadata": {},
+      "source": "mapbox-streets",
+      "source-layer": "road_label",
+      "filter": ["all", ["in", "class", "trunk", "motorway"]],
+      "layout": {
+        "symbol-placement": "line",
+        "text-anchor": "center",
+        "text-field": "{name}",
+        "text-font": ["Roboto Regular"],
+        "text-size": {"base": 1, "stops": [[8, 8], [11, 10], [14, 16]]},
+        "visibility": "visible",
+        "text-letter-spacing": {"stops": [[11, 0.1], [14, 0]]},
+        "text-offset": [0, 0.01],
+        "text-keep-upright": true
+      },
+      "paint": {
+        "text-color": "rgba(124, 0, 62, 1)",
+        "text-opacity": 1,
+        "text-halo-blur": 0.8,
+        "text-halo-width": 1.5,
         "text-halo-color": "rgba(255, 255, 255, 1)"
       }
     },
@@ -2464,15 +2500,16 @@
         "text-anchor": "bottom",
         "text-field": "{name_es}",
         "text-font": ["Roboto Regular"],
-        "text-max-width": 8,
+        "text-max-width": 6,
         "text-offset": [0, 0],
-        "text-size": {"base": 1.2, "stops": [[7, 12], [11, 16]]},
+        "text-size": {"base": 1.2, "stops": [[5, 8], [7, 10], [11, 16]]},
         "visibility": "visible"
       },
       "paint": {
         "text-color": "#333",
         "text-halo-color": "rgba(255,255,255,0.8)",
-        "text-halo-width": 1.2
+        "text-halo-width": 1.2,
+        "text-opacity": {"stops": [[6, 1], [10, 0.8], [12, 0.9]]}
       }
     },
     {
@@ -2521,7 +2558,7 @@
         "text-font": ["Roboto Medium"],
         "text-max-width": 8,
         "text-offset": [0, 0],
-        "text-size": {"base": 1.2, "stops": [[7, 14], [11, 24]]},
+        "text-size": {"base": 1.2, "stops": [[5, 10], [7, 11], [11, 24]]},
         "icon-allow-overlap": true,
         "icon-optional": false,
         "visibility": "visible"
@@ -2529,7 +2566,8 @@
       "paint": {
         "text-color": "#333",
         "text-halo-color": "rgba(255,255,255,0.8)",
-        "text-halo-width": 1.2
+        "text-halo-width": 1.2,
+        "text-opacity": {"stops": [[6, 1], [10, 0.8], [12, 0]]}
       }
     },
     {
