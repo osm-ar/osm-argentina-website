@@ -138,17 +138,30 @@
       }
     },
     {
+      "id": "landcover-tree",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "globallandcover",
+      "minzoom": 0,
+      "filter": ["all", ["==", "class", "tree"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(169, 237, 148, 1)",
+        "fill-opacity": {"stops": [[6, 0.3], [9, 0.5]]}
+      }
+    },
+    {
       "id": "landcover_wood",
       "type": "fill",
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "landcover",
       "filter": ["all", ["==", "class", "wood"]],
-      "layout": {"visibility": "visible"},
+      "layout": {"visibility": "none"},
       "paint": {
         "fill-antialias": false,
         "fill-color": "#76a668",
-        "fill-opacity": 1
+        "fill-opacity": 0.5
       }
     },
     {
@@ -199,13 +212,13 @@
       "paint": {"fill-color": "hsl(75, 37%, 81%)"}
     },
     {
-      "id": "landuse_scrub",
+      "id": "landcover-scrub",
       "type": "fill",
       "metadata": {},
       "source": "mapbox-streets",
       "source-layer": "landuse",
       "filter": ["all", ["==", "class", "scrub"]],
-      "layout": {"visibility": "visible"},
+      "layout": {"visibility": "none"},
       "paint": {"fill-color": "rgba(189, 206, 158, 1)"}
     },
     {
@@ -876,7 +889,7 @@
         "line-opacity": {"stops": [[12, 0], [13, 1]]},
         "line-width": {
           "base": 1.2,
-          "stops": [[12, 0], [13, 0], [14, 4], [20, 28]]
+          "stops": [[12, 0], [13, 0.8], [14, 4], [20, 28]]
         }
       }
     },
@@ -960,16 +973,16 @@
       }
     },
     {
-      "id": "road_secondary_tertiary_casing",
+      "id": "road_secondary_tertiary_casing-copy",
       "type": "line",
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "transportation",
+      "minzoom": 11,
       "filter": [
         "all",
         ["!in", "brunnel", "bridge", "tunnel"],
-        ["in", "class", "secondary", "tertiary"],
-        ["<=", "ramp", 1]
+        ["in", "class", "secondary", "tertiary"]
       ],
       "layout": {
         "line-cap": "round",
@@ -977,9 +990,17 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#798512",
-        "line-opacity": 1,
-        "line-width": {"base": 1.2, "stops": [[11, 0], [12, 2.7], [20, 30]]}
+        "line-color": {
+          "stops": [
+            [6, "rgba(197, 208, 125, 1)"],
+            [12, "rgba(125, 134, 55, 1)"]
+          ]
+        },
+        "line-opacity": {"stops": [[6, 0.5], [10, 1]]},
+        "line-width": {
+          "base": 1.2,
+          "stops": [[10, 0.9], [12, 2.3], [13, 5], [15, 8]]
+        }
       }
     },
     {
@@ -995,11 +1016,8 @@
       },
       "paint": {
         "line-color": "#aa7b1c",
-        "line-opacity": 1,
-        "line-width": {
-          "base": 1.2,
-          "stops": [[5, 0], [6, 0.1], [7, 0.7], [20, 22]]
-        }
+        "line-opacity": {"stops": [[6, 0], [10, 1]]},
+        "line-width": {"base": 1.2, "stops": [[7, 0.8], [20, 22]]}
       }
     },
     {
@@ -1008,6 +1026,7 @@
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "transportation",
+      "minzoom": 6,
       "filter": [
         "all",
         ["!in", "brunnel", "bridge", "tunnel"],
@@ -1021,11 +1040,8 @@
       },
       "paint": {
         "line-color": "#cb5639",
-        "line-opacity": 1,
-        "line-width": {
-          "base": 1.2,
-          "stops": [[5, 0], [6, 0.7], [7, 2], [20, 28]]
-        }
+        "line-opacity": {"stops": [[6, 1], [10, 1]]},
+        "line-width": {"base": 1.2, "stops": [[6, 0], [7, 0], [20, 28]]}
       }
     },
     {
@@ -1050,7 +1066,7 @@
         "line-color": "#df4579",
         "line-width": {
           "base": 1.2,
-          "stops": [[5, 0.4], [6, 0.7], [7, 1.75], [20, 22]]
+          "stops": [[5, 0], [6, 0.7], [7, 1.2], [20, 22]]
         }
       }
     },
@@ -1096,10 +1112,14 @@
       },
       "paint": {
         "line-color": {
-          "stops": [[12, "#c8c7c6"], [15, "rgba(255, 255, 255, 1)"]]
+          "stops": [
+            [12, "rgba(255, 255, 255, 1)"],
+            [15, "rgba(255, 255, 255, 1)"],
+            [16, "rgba(255, 255, 255, 1)"]
+          ]
         },
         "line-opacity": 1,
-        "line-width": {"base": 1.2, "stops": [[12, 1], [15, 4], [22, 40]]}
+        "line-width": {"base": 1.2, "stops": [[12, 0.2], [13, 0.7], [22, 40]]}
       }
     },
     {
@@ -1209,8 +1229,17 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#f7fabf",
-        "line-width": {"base": 1.2, "stops": [[11, 0], [12, 2], [20, 28]]}
+        "line-color": {
+          "stops": [
+            [6, "rgba(212, 200, 101, 1)"],
+            [10, "rgba(218, 213, 164, 1)"],
+            [11, "#FFF8BA"]
+          ]
+        },
+        "line-width": {
+          "base": 1.2,
+          "stops": [[10, 0.9], [12, 2], [13, 3.5], [15, 7]]
+        }
       }
     },
     {
@@ -1233,7 +1262,7 @@
       },
       "paint": {
         "line-color": "#fcd6a4",
-        "line-width": {"base": 1.2, "stops": [[5, 0], [7, 1], [20, 18]]}
+        "line-width": {"base": 1.2, "stops": [[5, 0], [7, 0.7], [20, 18]]}
       }
     },
     {
@@ -1264,7 +1293,7 @@
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "transportation",
-      "minzoom": 0,
+      "minzoom": 6,
       "filter": [
         "all",
         ["!in", "brunnel", "bridge", "tunnel"],
@@ -1277,7 +1306,7 @@
       },
       "paint": {
         "line-color": "#f9b29c",
-        "line-width": {"base": 1.2, "stops": [[5, 1], [7, 2], [20, 18]]}
+        "line-width": {"base": 1.2, "stops": [[5, 0.7], [7, 1], [20, 18]]}
       }
     },
     {
@@ -1300,7 +1329,7 @@
       },
       "paint": {
         "line-color": {"base": 1, "stops": [[5, "#e892a2"], [6, "#e892a2"]]},
-        "line-width": {"base": 1.2, "stops": [[5, 0], [7, 1], [20, 18]]}
+        "line-width": {"base": 1.2, "stops": [[5, 0.3], [7, 1], [20, 18]]}
       }
     },
     {
@@ -1358,7 +1387,7 @@
       "source-layer": "building",
       "minzoom": 13,
       "maxzoom": 24,
-      "layout": {"visibility": "visible"},
+      "layout": {"visibility": "none"},
       "paint": {
         "fill-color": "hsl(35, 8%, 85%)",
         "fill-outline-color": {
@@ -1375,7 +1404,7 @@
       "source-layer": "building",
       "minzoom": 14,
       "filter": ["all", ["==", "$type", "Polygon"]],
-      "layout": {"visibility": "visible"},
+      "layout": {"visibility": "none"},
       "paint": {
         "fill-extrusion-color": "hsl(35, 8%, 85%)",
         "fill-extrusion-height": {
@@ -1509,6 +1538,7 @@
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "transportation",
+      "minzoom": 7,
       "filter": [
         "all",
         ["==", "brunnel", "bridge"],
@@ -1529,6 +1559,7 @@
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "transportation",
+      "minzoom": 11,
       "filter": [
         "all",
         ["==", "class", "motorway"],
@@ -1653,14 +1684,15 @@
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "transportation",
+      "minzoom": 7,
       "filter": [
         "all",
         ["==", "brunnel", "bridge"],
         ["in", "class", "primary", "trunk"]
       ],
-      "layout": {"line-join": "round"},
+      "layout": {"line-join": "round", "visibility": "visible"},
       "paint": {
-        "line-color": "#fea",
+        "line-color": "#fcd6a4",
         "line-width": {"base": 1.2, "stops": [[5, 0], [7, 1], [20, 18]]}
       }
     },
@@ -1824,7 +1856,7 @@
       "minzoom": 0,
       "filter": ["all", ["==", "$type", "LineString"]],
       "layout": {
-        "text-field": "{name}",
+        "text-field": "{name:es}",
         "text-font": ["Roboto Regular"],
         "text-max-width": 5,
         "text-size": 16,
@@ -2168,7 +2200,7 @@
       "layout": {
         "icon-image": "{maki}_11",
         "text-anchor": "top",
-        "text-field": "{name}",
+        "text-field": "{name_es}",
         "text-font": ["Roboto Condensed Italic"],
         "text-max-width": 9,
         "text-offset": [0, 0.6],
@@ -2312,14 +2344,15 @@
       "layout": {
         "symbol-placement": "line",
         "text-anchor": "center",
-        "text-field": "{name}",
+        "text-field": "{name_es}",
         "text-font": ["Roboto Regular"],
         "text-offset": [0, 0.15],
         "text-size": {"base": 1, "stops": [[13, 11], [14, 10]]},
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
         "icon-optional": false,
-        "icon-rotation-alignment": "auto"
+        "icon-rotation-alignment": "auto",
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "rgba(56, 99, 245, 1)",
@@ -2332,16 +2365,17 @@
       "id": "road_label",
       "type": "symbol",
       "metadata": {},
-      "source": "openmaptiles",
-      "source-layer": "transportation_name",
-      "filter": ["all"],
+      "source": "mapbox-streets",
+      "source-layer": "road_label",
+      "filter": ["all", ["!=", "class", "ferry"]],
       "layout": {
         "symbol-placement": "line",
         "text-anchor": "center",
         "text-field": "{name}",
         "text-font": ["Roboto Regular"],
         "text-offset": [0, 0.15],
-        "text-size": {"base": 1, "stops": [[13, 12], [14, 13]]}
+        "text-size": {"base": 1, "stops": [[13, 12], [14, 13]]},
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "rgba(45, 43, 41, 1)",
