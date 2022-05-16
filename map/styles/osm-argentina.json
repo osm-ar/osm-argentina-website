@@ -1405,7 +1405,7 @@
       "source-layer": "building",
       "minzoom": 14,
       "filter": ["all", ["==", "$type", "Polygon"]],
-      "layout": {"visibility": "none"},
+      "layout": {"visibility": "visible"},
       "paint": {
         "fill-extrusion-color": "hsl(35, 8%, 85%)",
         "fill-extrusion-height": {
@@ -2325,7 +2325,7 @@
         "text-padding": {"stops": [[6, 50], [18, 1]]},
         "text-size": 12,
         "visibility": "visible",
-        "text-max-width": 6,
+        "text-max-width": 5,
         "text-allow-overlap": false,
         "text-ignore-placement": false,
         "text-keep-upright": true,
@@ -2382,8 +2382,8 @@
         "text-anchor": "center",
         "text-field": "{name}",
         "text-font": ["Roboto Regular"],
-        "text-offset": [0, 0.15],
-        "text-size": {"base": 1, "stops": [[11, 7], [14, 13]]},
+        "text-offset": [0, 0],
+        "text-size": {"base": 1, "stops": [[11, 7], [14, 12]]},
         "visibility": "visible",
         "text-letter-spacing": {"stops": [[11, 0.1], [14, 0]]}
       },
