@@ -178,6 +178,17 @@ header nav {
   background: rgba(0, 116, 217, 0.1);
 }
 
+.calles {
+  padding: 1px 3px; 
+  border-radius: 8px; 
+  color: #fff;
+}
+.conPavimento {
+  background-color: #d742f5; 
+}
+.sinPavimento {
+  background-color: #e87400; 
+}
 /*
 label:before {
   content: "";
