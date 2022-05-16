@@ -42,6 +42,15 @@
       "layout": {"visibility": "none"}
     },
     {
+      "id": "water",
+      "type": "fill",
+      "metadata": {},
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "layout": {"visibility": "visible"},
+      "paint": {"fill-color": "#aad3df"}
+    },
+    {
       "id": "natural_earth",
       "type": "raster",
       "source": "natural_earth_shaded_relief",
@@ -55,6 +64,7 @@
       "source": "openmaptiles",
       "source-layer": "park",
       "filter": ["all", ["==", "class", "nature_reserve"]],
+      "layout": {"visibility": "visible"},
       "paint": {
         "fill-color": {"stops": [[8, "#e6e9de"], [8, "#e6e9de"]]},
         "fill-opacity": 1,
@@ -474,15 +484,6 @@
       }
     },
     {
-      "id": "water",
-      "type": "fill",
-      "metadata": {},
-      "source": "openmaptiles",
-      "source-layer": "water",
-      "layout": {"visibility": "visible"},
-      "paint": {"fill-color": "#aad3df"}
-    },
-    {
       "id": "barrier_line-land",
       "type": "line",
       "metadata": {},
@@ -875,10 +876,9 @@
       "minzoom": 12,
       "filter": [
         "all",
-        ["==", ["geometry-type"], "LineString"],
-        ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true],
-        ["match", ["get", "class"], ["minor"], true, false],
-        ["!=", ["get", "ramp"], "1"]
+        ["==", ["get", "class"], "minor"],
+        ["!", ["has", "brunnel"]],
+        ["!", ["has", "ramp"]]
       ],
       "layout": {
         "line-cap": "round",
@@ -1096,10 +1096,9 @@
       "minzoom": 12,
       "filter": [
         "all",
-        ["==", ["geometry-type"], "LineString"],
-        ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true],
-        ["match", ["get", "class"], ["minor"], true, false],
-        ["!=", ["get", "ramp"], "1"]
+        ["==", ["get", "class"], "minor"],
+        ["!", ["has", "brunnel"]],
+        ["!", ["has", "ramp"]]
       ],
       "layout": {
         "line-cap": "round",
@@ -1920,10 +1919,11 @@
       "filter": ["all", ["==", "placement", "point"]],
       "layout": {
         "text-field": "{name_es}",
-        "text-font": ["Roboto Regular"],
+        "text-font": ["Noto Sans Italic"],
         "text-max-width": 5,
-        "text-size": 12,
-        "visibility": "visible"
+        "text-size": {"stops": [[6, 16], [10, 16]]},
+        "visibility": "visible",
+        "text-letter-spacing": 0.2
       },
       "paint": {
         "text-color": "#5d60be",
@@ -2566,7 +2566,7 @@
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "place",
-      "minzoom": 3,
+      "minzoom": 4,
       "maxzoom": 0,
       "filter": ["all", ["==", "class", "state"]],
       "layout": {
