@@ -1916,7 +1916,7 @@
       }
     },
     {
-      "id": "boundary_2-copy-copy",
+      "id": "boundary_no-ARG-CL",
       "type": "line",
       "metadata": {},
       "source": "mapbox-streets",
@@ -1925,9 +1925,56 @@
       "filter": [
         "all",
         ["==", "admin_level", 2],
-        ["!=", "iso_3166_1", "FK"],
-        ["!=", "iso_3166_1", "AR-XH"],
-        ["!=", "iso_3166_1", "CL-XH"]
+        ["!in", "iso_3166_1", "FK", "AR-XH", "CL-XH", "AR-CL"]
+      ],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#b29ac3",
+        "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
+        "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
+      }
+    },
+    {
+      "id": "boundary_ARG-CL",
+      "type": "line",
+      "metadata": {},
+      "source": "mapbox-streets",
+      "source-layer": "admin",
+      "minzoom": 0,
+      "maxzoom": 24,
+      "filter": [
+        "all",
+        ["==", "admin_level", 2],
+        ["==", "iso_3166_1", "AR-CL"]
+      ],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#b29ac3",
+        "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
+        "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
+      }
+    },
+    {
+      "id": "boundary_2-copy-copy-copy",
+      "type": "line",
+      "metadata": {},
+      "source": "openmaptiles",
+      "source-layer": "boundary",
+      "minzoom": 0,
+      "maxzoom": 24,
+      "filter": [
+        "all",
+        ["==", "admin_level", 2],
+        ["==", "adm0_r", "CHL"],
+        ["==", "adm0_l", "ARG"]
       ],
       "layout": {
         "line-cap": "round",
@@ -1956,7 +2003,7 @@
       "layout": {
         "line-cap": "round",
         "line-join": "round",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": "#b29ac3",
