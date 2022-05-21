@@ -138,7 +138,7 @@
       "source": "openmaptiles",
       "source-layer": "globallandcover",
       "minzoom": 0,
-      "filter": ["all", ["==", "class", "tree"]],
+      "filter": ["all", ["in", "class", "tree"]],
       "layout": {"visibility": "visible"},
       "paint": {
         "fill-color": "rgba(169, 237, 148, 1)",
@@ -239,6 +239,22 @@
       "source-layer": "water",
       "layout": {"visibility": "visible"},
       "paint": {"fill-color": "#aad3df"}
+    },
+    {
+      "id": "landuse_ice-shelf",
+      "type": "fill",
+      "metadata": {},
+      "source": "openmaptiles",
+      "source-layer": "landcover",
+      "minzoom": 0,
+      "filter": ["all", ["==", "class", "ice"]],
+      "paint": {
+        "fill-color": "#FFFFFF",
+        "fill-outline-color": "rgba(116, 194, 252, 0.18)",
+        "fill-antialias": true,
+        "fill-translate-anchor": "map",
+        "fill-opacity": 0.9
+      }
     },
     {
       "id": "landuse_railway",
@@ -402,31 +418,6 @@
       }
     },
     {
-      "id": "glacier_name",
-      "type": "symbol",
-      "metadata": {},
-      "source": "mapbox-streets",
-      "source-layer": "poi_label",
-      "minzoom": 0,
-      "maxzoom": 24,
-      "filter": ["all", ["==", "type", "Glacier"]],
-      "layout": {
-        "text-field": "{name_es}",
-        "text-font": ["Roboto Regular"],
-        "text-max-width": 5,
-        "text-size": 12,
-        "visibility": "visible",
-        "text-keep-upright": true,
-        "text-offset": [0, 0],
-        "text-optional": false
-      },
-      "paint": {
-        "text-color": "rgba(38, 98, 228, 1)",
-        "text-halo-color": "rgba(255,255,255,0.7)",
-        "text-halo-width": 1
-      }
-    },
-    {
       "id": "waterway_other",
       "type": "line",
       "metadata": {},
@@ -447,7 +438,7 @@
       "source-layer": "landuse",
       "filter": ["all", ["==", "type", "bare_rock"]],
       "paint": {
-        "fill-color": "#DFE4F1",
+        "fill-color": "rgba(208, 208, 208, 1)",
         "fill-outline-color": "rgba(216, 216, 220, 1)",
         "fill-antialias": true
       }
@@ -475,7 +466,7 @@
       "source-layer": "landuse",
       "filter": ["all", ["==", "class", "sand"]],
       "paint": {
-        "fill-color": "#fff1ba",
+        "fill-color": "rgba(254, 247, 202, 1)",
         "fill-outline-color": "#ffffff",
         "fill-antialias": false
       }
@@ -486,11 +477,38 @@
       "metadata": {},
       "source": "mapbox-streets",
       "source-layer": "landuse",
+      "minzoom": 5,
       "filter": ["all", ["==", "class", "glacier"]],
       "paint": {
         "fill-color": "#FFFFFF",
-        "fill-outline-color": "#9EBDFF",
-        "fill-antialias": false
+        "fill-outline-color": "#FFFFFF",
+        "fill-antialias": false,
+        "fill-translate-anchor": "map"
+      }
+    },
+    {
+      "id": "glacier_name",
+      "type": "symbol",
+      "metadata": {},
+      "source": "mapbox-streets",
+      "source-layer": "poi_label",
+      "minzoom": 0,
+      "maxzoom": 24,
+      "filter": ["all", ["==", "type", "Glacier"]],
+      "layout": {
+        "text-field": "{name_es}",
+        "text-font": ["Roboto Regular"],
+        "text-max-width": 5,
+        "text-size": 12,
+        "visibility": "visible",
+        "text-keep-upright": true,
+        "text-offset": [0, 0],
+        "text-optional": false
+      },
+      "paint": {
+        "text-color": "rgba(38, 98, 228, 1)",
+        "text-halo-color": "rgba(255,255,255,0.7)",
+        "text-halo-width": 1
       }
     },
     {
@@ -514,7 +532,7 @@
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 11,
-      "filter": ["all", ["==", "$type", "Polygon"], ["==", "class", "apron"]],
+      "filter": ["all", ["==", "", "Polygon"], ["==", "class", "apron"]],
       "layout": {"visibility": "visible"},
       "paint": {
         "fill-color": "#e9d1ff",
@@ -529,7 +547,7 @@
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 11,
-      "filter": ["==", "$type", "Polygon"],
+      "filter": ["==", "", "Polygon"],
       "layout": {"visibility": "none"},
       "paint": {"fill-color": "rgba(229, 228, 224, 1)", "fill-opacity": 0.7}
     },
@@ -540,11 +558,7 @@
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 11,
-      "filter": [
-        "all",
-        ["==", "$type", "LineString"],
-        ["==", "class", "runway"]
-      ],
+      "filter": ["all", ["==", "", "LineString"], ["==", "class", "runway"]],
       "layout": {"visibility": "visible"},
       "paint": {
         "line-color": "#bbbbcc",
@@ -558,11 +572,7 @@
       "source": "openmaptiles",
       "source-layer": "aeroway",
       "minzoom": 11,
-      "filter": [
-        "all",
-        ["==", "$type", "LineString"],
-        ["==", "class", "taxiway"]
-      ],
+      "filter": ["all", ["==", "", "LineString"], ["==", "class", "taxiway"]],
       "layout": {"visibility": "visible"},
       "paint": {
         "line-color": "#bbbbcc",
@@ -717,7 +727,7 @@
       "source-layer": "transportation",
       "filter": [
         "all",
-        ["==", "$type", "LineString"],
+        ["==", "", "LineString"],
         ["==", "brunnel", "tunnel"],
         ["in", "class", "path", "pedestrian"]
       ],
@@ -879,11 +889,7 @@
       "metadata": {},
       "source": "mapbox-streets",
       "source-layer": "road",
-      "filter": [
-        "all",
-        ["==", "$type", "Polygon"],
-        ["==", "class", "pedestrian"]
-      ],
+      "filter": ["all", ["==", "", "Polygon"], ["==", "class", "pedestrian"]],
       "layout": {"visibility": "visible"},
       "paint": {"fill-antialias": false, "fill-color": "rgba(255, 255, 255, 1)"}
     },
@@ -893,7 +899,7 @@
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "transportation",
-      "filter": ["all", ["==", "$type", "Polygon"]],
+      "filter": ["all", ["==", "", "Polygon"]],
       "layout": {"visibility": "visible"},
       "paint": {"fill-antialias": false, "fill-color": "rgba(252, 248, 248, 1)"}
     },
@@ -1142,7 +1148,7 @@
       "minzoom": 14,
       "filter": [
         "all",
-        ["==", "$type", "LineString"],
+        ["==", "", "LineString"],
         ["!in", "brunnel", "bridge", "tunnel"],
         ["in", "class", "path", "pedestrian"],
         ["==", "type", "footway"]
@@ -1163,7 +1169,7 @@
       "minzoom": 14,
       "filter": [
         "all",
-        ["==", "$type", "LineString"],
+        ["==", "", "LineString"],
         ["!in", "brunnel", "bridge", "tunnel"],
         ["in", "class", "path", "pedestrian"]
       ],
@@ -1494,7 +1500,7 @@
       "source": "openmaptiles",
       "source-layer": "building",
       "minzoom": 14,
-      "filter": ["all", ["==", "$type", "Polygon"]],
+      "filter": ["all", ["==", "", "Polygon"]],
       "layout": {"visibility": "visible"},
       "paint": {
         "fill-extrusion-color": "hsl(35, 8%, 85%)",
@@ -1596,7 +1602,7 @@
       "minzoom": 15,
       "filter": [
         "all",
-        ["==", "$type", "LineString"],
+        ["==", "", "LineString"],
         ["==", "brunnel", "bridge"],
         ["in", "class", "path", "pedestrian"]
       ],
@@ -1680,7 +1686,7 @@
       "minzoom": 14,
       "filter": [
         "all",
-        ["==", "$type", "LineString"],
+        ["==", "", "LineString"],
         ["==", "brunnel", "bridge"],
         ["in", "class", "path", "pedestrian"]
       ],
@@ -1959,13 +1965,43 @@
       }
     },
     {
+      "id": "water_name-wetland",
+      "type": "symbol",
+      "metadata": {},
+      "source": "mapbox-streets",
+      "source-layer": "poi_label",
+      "minzoom": 0,
+      "filter": ["all", ["==", "type", "Wetland"]],
+      "layout": {
+        "text-field": "{name_es}",
+        "text-font": ["Roboto Regular"],
+        "text-max-width": 5,
+        "text-size": {"stops": [[6, 8], [10, 14]]},
+        "symbol-placement": "point",
+        "visibility": "visible",
+        "text-letter-spacing": 0.1,
+        "symbol-z-order": "auto",
+        "icon-anchor": "center",
+        "icon-pitch-alignment": "auto",
+        "icon-text-fit": "none",
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "text-offset": [0, 0]
+      },
+      "paint": {
+        "text-color": "rgba(104, 107, 226, 1)",
+        "text-halo-color": "rgba(255,255,255,1)",
+        "text-halo-width": 1
+      }
+    },
+    {
       "id": "water_name",
       "type": "symbol",
       "metadata": {},
       "source": "openmaptiles",
       "source-layer": "waterway",
       "minzoom": 0,
-      "filter": ["all", ["==", "$type", "LineString"]],
+      "filter": ["all", ["==", "", "LineString"]],
       "layout": {
         "text-field": "{name:es}",
         "text-font": ["Roboto Regular"],
@@ -1997,7 +2033,7 @@
       "paint": {
         "line-color": "rgba(110, 186, 45, 0.37)",
         "line-opacity": 1,
-        "line-width": {"stops": [[5, 0.1], [8, 1], [10, 3]]},
+        "line-width": {"stops": [[5, 0.7], [8, 1], [10, 3]]},
         "line-offset": 0,
         "line-dasharray": {"stops": [[6, [1, 0]], [10, [3, 2]]]},
         "line-translate-anchor": "map",
@@ -2016,7 +2052,7 @@
       "layout": {
         "text-field": "{name}",
         "text-font": ["Noto Sans Italic"],
-        "text-size": {"stops": [[6, 10], [10, 11], [12, 13]]},
+        "text-size": {"stops": [[6, 9], [10, 10], [12, 13]]},
         "symbol-placement": {"stops": [[6, "point"], [12, "point"]]},
         "visibility": "visible",
         "text-letter-spacing": {"stops": [[6, 0.1], [9, 0.2], [12, 0.4]]},
@@ -2040,8 +2076,8 @@
         "icon-ignore-placement": false,
         "icon-optional": false,
         "icon-rotation-alignment": "auto",
-        "text-padding": 5,
-        "text-max-width": 7
+        "text-max-width": 7,
+        "text-padding": {"stops": [[6, 50], [10, 50], [11, 0]]}
       },
       "paint": {
         "text-color": "rgba(7, 128, 22, 1)",
@@ -2060,7 +2096,7 @@
       "source": "openmaptiles",
       "source-layer": "water_name",
       "minzoom": 0,
-      "filter": ["all", ["==", "$type", "LineString"]],
+      "filter": ["all", ["==", "", "LineString"]],
       "layout": {
         "text-field": "{name}",
         "text-font": ["Roboto Regular"],
@@ -2124,6 +2160,46 @@
       }
     },
     {
+      "id": "poi_volcano",
+      "type": "symbol",
+      "metadata": {},
+      "source": "openmaptiles",
+      "source-layer": "mountain_peak",
+      "minzoom": 7,
+      "maxzoom": 24,
+      "filter": ["all", ["==", "$type", "Point"], ["==", "class", "volcano"]],
+      "layout": {
+        "icon-image": "triangle_11",
+        "text-anchor": "top",
+        "text-field": "{name} ({ele} m)",
+        "text-font": ["Noto Sans Italic"],
+        "text-max-width": 7,
+        "text-offset": [0, 0.6],
+        "text-padding": 2,
+        "text-size": 11,
+        "text-pitch-alignment": "auto",
+        "text-rotation-alignment": "auto",
+        "text-justify": "center",
+        "text-max-angle": 45,
+        "text-rotate": 0,
+        "text-optional": false,
+        "symbol-placement": "point",
+        "icon-allow-overlap": false,
+        "icon-ignore-placement": false,
+        "icon-optional": false,
+        "icon-size": 1,
+        "text-letter-spacing": 0.05
+      },
+      "paint": {
+        "text-color": "rgba(240, 6, 6, 1)",
+        "text-halo-blur": 0.5,
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1,
+        "icon-color": "#5A2906",
+        "icon-translate-anchor": "map"
+      }
+    },
+    {
       "id": "poi_peak",
       "type": "symbol",
       "metadata": {},
@@ -2131,7 +2207,7 @@
       "source-layer": "mountain_peak",
       "minzoom": 8,
       "maxzoom": 24,
-      "filter": ["all", ["==", "$type", "Point"]],
+      "filter": ["all", ["==", "$type", "Point"], ["!=", "class", "volcano"]],
       "layout": {
         "icon-image": "triangle_11",
         "text-anchor": "top",
@@ -2170,11 +2246,7 @@
       "source": "openmaptiles",
       "source-layer": "poi",
       "minzoom": 16,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        ["==", "subclass", "artwork"]
-      ],
+      "filter": ["all", ["==", "", "Point"], ["==", "subclass", "artwork"]],
       "layout": {
         "icon-image": "monument_11",
         "text-anchor": "top",
@@ -2204,7 +2276,7 @@
       "minzoom": 16,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         ["==", "maki", "religious-muslim"]
       ],
       "layout": {
@@ -2236,7 +2308,7 @@
       "minzoom": 16,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         ["==", "maki", "religious-jewish"]
       ],
       "layout": {
@@ -2268,7 +2340,7 @@
       "minzoom": 16,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         ["==", "maki", "religious-christian"]
       ],
       "layout": {
@@ -2300,7 +2372,7 @@
       "minzoom": 16,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         ["in", "class", "fast_food", "shop", "clothing_store"]
       ],
       "layout": {
@@ -2332,7 +2404,7 @@
       "minzoom": 1,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         ["!in", "type", "Nature Reserve", "National Park"]
       ],
       "layout": {
@@ -2364,7 +2436,7 @@
       "minzoom": 15,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         ["!in", "type", "pitch"],
         ["!in", "class", "bollard"]
       ],
@@ -2397,7 +2469,7 @@
       "minzoom": 17,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         ["!in", "type", "pitch"],
         ["in", "class", "bollard"]
       ],
@@ -2432,7 +2504,7 @@
       "minzoom": 15,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         [">=", "rank", 7],
         ["<", "rank", 20],
         ["!in", "subclass", "pitch"]
@@ -2464,7 +2536,7 @@
       "minzoom": 14,
       "filter": [
         "all",
-        ["==", "$type", "Point"],
+        ["==", "", "Point"],
         [">=", "rank", 1],
         ["<", "rank", 7]
       ],
@@ -2761,7 +2833,7 @@
       "source": "mapbox-streets",
       "source-layer": "airport_label",
       "minzoom": 9,
-      "filter": ["all", ["==", "$type", "Point"], ["==", "maki", "airport"]],
+      "filter": ["all", ["==", "", "Point"], ["==", "maki", "airport"]],
       "layout": {
         "icon-image": "{maki}_11",
         "text-anchor": "top",
