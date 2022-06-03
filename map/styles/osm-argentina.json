@@ -3813,7 +3813,7 @@
       "source": "mapbox-streets",
       "source-layer": "place_label",
       "minzoom": 4,
-      "filter": ["all", ["==", "type", "city"], ["!has", "capital"]],
+      "filter": ["all", ["==", "type", "city"], [">", "capital", 2]],
       "layout": {
         "icon-image": {"base": 1, "stops": [[0, "dot_9"], [8, ""]]},
         "text-anchor": "bottom",
