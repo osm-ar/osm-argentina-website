@@ -2748,7 +2748,14 @@
       "minzoom": 5,
       "filter": ["all", ["==", "$type", "Polygon"]],
       "layout": {
-        "text-field": "{name}",
+        "text-field": {
+          "property": "",
+          "type": "identity",
+          "stops": [
+            [{"zoom": 6, "value": ""}, "{name_es}"],
+            [{"zoom": 10, "value": ""}, "{name_es}"]
+          ]
+        },
         "text-font": ["Noto Sans Italic"],
         "text-size": {"stops": [[6, 9], [10, 10], [12, 13]]},
         "symbol-placement": {"stops": [[6, "point"], [12, "point"]]},
@@ -3704,7 +3711,7 @@
       "layout": {
         "icon-image": "{maki}_11",
         "text-anchor": "top",
-        "text-field": "{name} ({ref})",
+        "text-field": "{name_es} ({ref})",
         "text-font": ["Noto Sans Regular"],
         "text-max-width": 9,
         "text-offset": [0, 0.6],
@@ -3738,7 +3745,7 @@
       "metadata": {},
       "source": "mapbox-streets",
       "source-layer": "place_label",
-      "filter": ["all", ["==", "type", "village"]],
+      "filter": ["==", ["get", "type"], "village"],
       "layout": {
         "text-field": "{name_es}",
         "text-font": ["Roboto Regular"],
@@ -3841,7 +3848,7 @@
       "source-layer": "place",
       "minzoom": 4,
       "maxzoom": 0,
-      "filter": ["all", ["==", "class", "state"]],
+      "filter": ["match", ["get", "class"], ["province", "state"], true, false],
       "layout": {
         "text-field": "{name:es}",
         "text-font": ["Roboto Condensed Italic"],
@@ -3951,7 +3958,7 @@
       "source-layer": "country_label",
       "filter": ["all", [">=", "scalerank", 3], ["!=", "code", "FK"]],
       "layout": {
-        "text-field": "{name_en}",
+        "text-field": "{name_es}",
         "text-font": ["Roboto Condensed Italic"],
         "text-max-width": 6.25,
         "text-size": {"stops": [[3, 11], [7, 17]]},
