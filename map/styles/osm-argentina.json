@@ -2748,14 +2748,7 @@
       "minzoom": 5,
       "filter": ["all", ["==", "$type", "Polygon"]],
       "layout": {
-        "text-field": {
-          "property": "",
-          "type": "identity",
-          "stops": [
-            [{"zoom": 6, "value": ""}, "{name_es}"],
-            [{"zoom": 10, "value": ""}, "{name_es}"]
-          ]
-        },
+        "text-field":  "{name_es}",
         "text-font": ["Noto Sans Italic"],
         "text-size": {"stops": [[6, 9], [10, 10], [12, 13]]},
         "symbol-placement": {"stops": [[6, "point"], [12, "point"]]},
