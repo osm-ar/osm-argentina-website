@@ -104,11 +104,23 @@
     } else {
       var map = new mapboxgl.Map({
         container: 'map',
+        projection: 'globe',
         style: 'map/styles/osm-argentina-min.json',
-        center: [-63.0, -44.8],
-        zoom: 3,
+        center: [-64.13, -48.83],
+        zoom: 2.5,
         hash: true,
       });
+
+      map.on('style.load', () => {
+        map.setFog({
+          color: 'rgb(186, 210, 235)', // Lower atmosphere
+          'high-color': 'rgb(36, 92, 223)', // Upper atmosphere
+          'horizon-blend': 0.02, // Atmosphere thickness (default 0.2 at low zooms)
+          'space-color': 'rgb(11, 11, 25)', // Background color
+          'star-intensity': 0.6 // Background star brightness (default 0.35 at low zoooms )
+        });
+      });
+
       var nav = new mapboxgl.NavigationControl();
       map.addControl(nav, 'top-right');
       map.addControl(new mapboxgl.GeolocateControl());
