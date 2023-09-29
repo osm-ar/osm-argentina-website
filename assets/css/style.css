@@ -1,34 +1,34 @@
 * {
-  margin     : 0;
-  padding    : 0;
+  margin: 0;
+  padding: 0;
   font-family: "Roboto", sans-serif;
 }
 
 /* NAV */
 
 header {
-  position     : fixed;
-  width        : 100%;
+  position: fixed;
+  width: 100%;
   border-bottom: 5px solid #0B3954;
-  z-index      : 3;
-  background   : #2196F3;
+  z-index: 3;
+  background: #2196F3;
 }
 
 header nav {
-  width : 90%;
+  width: 90%;
   margin: 0 auto;
   height: 59px
 }
 
 .nav-buttons {
   display: inline-block;
-  float  : right
+  float: right
 }
 
 .nav-buttons ul {
-  overflow  : hidden;
+  overflow: hidden;
   list-style: none;
-  display   : block;
+  display: block;
 }
 
 .nav-buttons ul li {
@@ -37,14 +37,14 @@ header nav {
 
 .nav-buttons ul li a {
   text-decoration: none;
-  padding        : 20px 8px;
-  display        : inline-block;
+  padding: 20px 8px;
+  display: inline-block;
 }
 
 .nav-buttons ul li a:hover {
-  background        : #0B3954;
+  background: #0B3954;
   -webkit-transition: background 0.5s;
-  transition        : background 0.5s;
+  transition: background 0.5s;
 }
 
 .nav-buttons ul li span {
@@ -53,7 +53,7 @@ header nav {
 
 .menu-bar {
   display: none;
-  height : 59px;
+  height: 59px;
 }
 
 @media screen and (max-width:1248px) {
@@ -64,12 +64,12 @@ header nav {
 
 @media screen and (max-width:1123px) {
   header {
-    width     : 80%;
-    height    : 100%;
-    position  : fixed;
-    display   : block;
+    width: 80%;
+    height: 100%;
+    position: fixed;
+    display: block;
     background: #0B3954;
-    left      : -100%
+    left: -100%
   }
 
   .small-logo {
@@ -83,12 +83,12 @@ header nav {
 
   .nav-buttons {
     display: block;
-    float  : none;
+    float: none;
   }
 
   .nav-buttons ul li {
-    float        : none;
-    display      : block;
+    float: none;
+    display: block;
     border-bottom: 2px solid #2196F3;
   }
 
@@ -97,21 +97,21 @@ header nav {
   }
 
   .menu-bar {
-    display      : block;
-    width        : 100%;
-    background   : #2196F3;
+    display: block;
+    width: 100%;
+    background: #2196F3;
     border-bottom: 5px solid #0B3954;
   }
 
   .menu-bar a {
     text-decoration: none;
-    display        : inline-block;
-    float          : right;
-    padding        : 5px;
-    margin         : 10px 10px 10px 0;
-    border         : 2px solid #fff;
-    border-radius  : 3px;
-    font-weight    : bold;
+    display: inline-block;
+    float: right;
+    padding: 5px;
+    margin: 10px 10px 10px 0;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    font-weight: bold;
   }
 }
 
@@ -123,7 +123,7 @@ header nav {
 
   .map-overlay {
     width: auto !important;
-    left : 26% !important;
+    left: 26% !important;
   }
 
 }
@@ -142,40 +142,54 @@ header nav {
 
 #map {
   position: absolute;
-  top     : 64px;
-  bottom  : 0;
-  width   : 100%;
-  z-index : 0;
+  top: 64px;
+  bottom: 0;
+  width: 100%;
+  z-index: 0;
 }
 
 /* SELECTOR DE CAPAS */
 
 .capas {
-  position     : absolute;
-  margin       : 50px 0 0 5px;
-  z-index      : 1;
-  background   : rgba(255, 255, 255, .5);
-  padding      : 10px;
-  box-shadow   : 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+  position: absolute;
+  margin: 50px 0 0 5px;
+  z-index: 1;
+  background: rgba(255, 255, 255, .5);
+  padding: 10px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
 }
 
 .formulario label {
-  display           : inline-block;
-  cursor            : pointer;
-  color             : #0074D9;
-  position          : relative;
-  padding           : 5px 15px;
-  font-size         : 1em;
-  border-radius     : 5px;
+  display: inline-block;
+  cursor: pointer;
+  color: #0074D9;
+  position: relative;
+  padding: 5px 15px;
+  font-size: 1em;
+  border-radius: 5px;
   -webkit-transition: all 0.3s ease;
-  -o-transition     : all 0.3s ease;
-  transition        : all 0.3s ease;
-  margin            : 1px 0;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 1px 0;
 }
 
 .formulario label:hover {
   background: rgba(0, 116, 217, 0.1);
+}
+
+.calles {
+  padding: 1px 3px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.conPavimento {
+  background-color: #d742f5;
+}
+
+.sinPavimento {
+  background-color: #e87400;
 }
 
 /*
@@ -193,28 +207,28 @@ label:before {
 */
 
 .map-options {
-  display   : flex;
+  display: flex;
   text-align: center;
 }
 
 .sel-marco {
   border-radius: 5px;
-  height       : 60px;
-  width        : 60px;
-  border       : 2px solid #0074D9;
-  margin       : auto;
+  height: 60px;
+  width: 60px;
+  border: 2px solid #0074D9;
+  margin: auto;
 }
 
 .marco-map {
-  background-image   : url('../img/map.png');
+  background-image: url('../img/map.png');
   background-position: center;
-  background-size    : cover;
+  background-size: cover;
 }
 
 .marco-sat {
-  background-image   : url('../img/satellite.png');
+  background-image: url('../img/satellite.png');
   background-position: center;
-  background-size    : cover;
+  background-size: cover;
 }
 
 input[type="radio"] {
@@ -226,10 +240,10 @@ input[type="radio"]:checked+label:before {
 }
 
 input[type="radio"]:checked+label {
-  padding      : 5px 15px;
-  background   : #0074D9;
+  padding: 5px 15px;
+  background: #0074D9;
   border-radius: 2px;
-  color        : #fff;
+  color: #fff;
 }
 
 input[type="checkbox"] {
@@ -242,7 +256,7 @@ input[type="checkbox"]:checked+label:before {
 
 input[type="checkbox"]:checked+label {
   background: #0074D9;
-  color     : #fff;
+  color: #fff;
 }
 
 @media screen and (min-width: 600px) {
@@ -253,30 +267,30 @@ input[type="checkbox"]:checked+label {
 
 @media screen and (min-width: 400px) {
   #panelToggle {
-    position    : absolute;
-    margin-left : 12px;
+    position: absolute;
+    margin-left: 12px;
     /*margin-top: 82px;*/
-    font-size   : x-large;
+    font-size: x-large;
   }
 }
 
 .panelToggle {
-  position   : absolute;
+  position: absolute;
   margin-left: 10px;
-  top        : 67px;
-  font-size  : xx-large;
-  box-shadow : 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+  top: 67px;
+  font-size: xx-large;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .btn-panel {
-  padding      : 5px 15px;
-  background   : #0074D9;
+  padding: 5px 15px;
+  background: #0074D9;
   border-radius: 2px;
-  color        : #fff;
-  margin-top   : 5px;
+  color: #fff;
+  margin-top: 5px;
   margin-bottom: 5px;
-  border-width : 0;
-  cursor       : pointer;
+  border-width: 0;
+  cursor: pointer;
 }
 
 button:hover {
@@ -285,7 +299,7 @@ button:hover {
 
 button:active {
   background: #dddddd;
-  color     : #0074D9;
+  color: #0074D9;
 }
 
 .oculto {
@@ -293,76 +307,76 @@ button:active {
 }
 
 #features {
-  max-width : 300px;
+  max-width: 300px;
   max-height: 185px;
-  overflow  : auto;
+  overflow: auto;
 }
 
 .map-overlay {
-  font    : 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   position: absolute;
-  width   : 35%;
-  bottom  : 0;
-  left    : 32%;
-  padding : 10px;
-  color   : rgb(11, 57, 84);
+  width: 35%;
+  bottom: 0;
+  left: 32%;
+  padding: 10px;
+  color: rgb(11, 57, 84);
 }
 
 .map-overlay .map-overlay-inner {
   background-color: #ffffff80;
-  box-shadow      : 0 1px 2px rgba(0, 0, 0, 0.2);
-  border-radius   : 3px;
-  padding         : 10px;
-  margin-bottom   : 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .map-overlay h2 {
   line-height: 24px;
-  display    : block;
-  margin     : 0 0 10px;
+  display: block;
+  margin: 0 0 10px;
 }
 
 .map-overlay .legend .bar {
-  height    : 10px;
-  width     : 100%;
+  height: 10px;
+  width: 100%;
   background: linear-gradient(to right, #fca107, #7f3121);
 }
 
 .map-overlay input {
   background-color: transparent;
-  display         : inline-block;
-  width           : 100%;
-  position        : relative;
-  margin          : 0;
-  cursor          : ew-resize;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  margin: 0;
+  cursor: ew-resize;
 }
 
 .map-overlay-inner button {
-  display           : inline-block;
-  cursor            : pointer;
-  background        : #0074D9;
-  color             : #ffffff;
-  position          : relative;
-  padding           : 5px 15px;
-  font-size         : 1em;
-  border-radius     : 5px;
+  display: inline-block;
+  cursor: pointer;
+  background: #0074D9;
+  color: #ffffff;
+  position: relative;
+  padding: 5px 15px;
+  font-size: 1em;
+  border-radius: 5px;
   -webkit-transition: all 0.3s ease;
-  -o-transition     : all 0.3s ease;
-  transition        : all 0.3s ease;
-  margin            : 1px 0;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 1px 0;
 }
 
 .map-overlay-inner button:hover {
   background: rgba(0, 116, 217, 0.1);
-  color     : #0074D9;
+  color: #0074D9;
 }
 
 /* FUENTES */
 
 @font-face {
   font-family: 'Roboto';
-  src        : url('../font/icons/Roboto-Regular.ttf') format('truetype'),
-    url('../font/icons/Roboto-Regular.woff') format('woff'), ;
+  src: url('../font/roboto/Roboto-Regular.ttf') format('truetype'),
+    url('../font/roboto/Roboto-Regular.woff') format('woff'), ;
   font-weight: normal;
-  font-style : normal;
+  font-style: normal;
 }

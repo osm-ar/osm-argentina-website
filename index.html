@@ -2,15 +2,32 @@
 <html lang="es">
 
 <head>
-  <title>OpenStreetMap Argentina</title>
   <meta charset="utf-8">
-  <meta name="viewport"
-    content="width-device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>OpenStreetMap Argentina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="comunidad argentina de OpenStreetMap">
+  <meta name="author" content="Gonzalo Perez" />
+  <meta name="keywords" Content="osm,map,mapa,openstreetmap" />
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:title" content="OpenStreetMap Argentina">
+  <meta property="og:site_name" content="OpenStreetMap Argentina">
+  <meta property="og:description" content="comunidad argentina de OpenStreetMap">
+  <meta property="og:url" content="https://openstreetmap.org.ar">
+  <meta property="og:image" itemprop="image" content="https://openstreetmap.org.ar/assets/img/osm-ar-logo.jpg">
+  <meta property="og:image:secure_url" itemprop="image"
+    content="https://openstreetmap.org.ar/assets/img/osm-ar-logo.jpg">
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="256" />
+  <meta property="og:image:height" content="256" />
+  <meta property="og:image:alt" content="Logo de OpenStreetMap Argentina" />
+
   <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32" />
   <link rel="stylesheet" type="text/css" href="assets/css/style.min.css">
+
   <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
   <link rel='stylesheet'
     href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css'
     type='text/css' />
@@ -20,23 +37,23 @@
 
 <body>
   <div class="menu-bar">
-    <img src="assets/img/small-logo.svg" class="small-logo">
+    <img title="logo chico" src="assets/img/small-logo.svg" class="small-logo">
     <a href="#" class="menu-button tx-white"><i class="fas fa-bars"></i></span></a>
   </div>
   <header>
     <nav>
-      <img src="assets/img/big-logo.svg" class="big-logo">
+      <img title="logo grande" src="assets/img/big-logo.svg" class="big-logo">
       <div class="nav-buttons">
         <ul>
-          <li><a href="https://umap.openstreetmap.fr/es/map/sistema-de-salud-argentina-covid19_437454" target="_blank"
-              class="tx-white"><i class="fas fa-virus"></i> COVID-19</a></li>
+          <li><a rel="noopener" href="https://umap.openstreetmap.fr/es/map/sistema-de-salud-argentina-covid19_437454"
+              target="_blank" class="tx-white"><i class="fas fa-virus"></i> COVID-19</a></li>
           <li><a id="editarMapa" href="#" target="_blank" class="tx-white"><i class="fas fa-edit"></i> Editá el mapa</a>
           </li>
-          <li><a href="https://enosm.openstreetmap.org.ar/" target="_blank" class="tx-white"><i
+          <li><a rel="noopener" href="https://enosm.openstreetmap.org.ar/" target="_blank" class="tx-white"><i
                 class="fas fa-store-alt"></i>
               Agregá una tienda</a></li>
-          <li><a href="https://wiki.openstreetmap.org/wiki/ES:Argentina" target="_blank" class="tx-white"><i
-                class="fas fa-users"></i>
+          <li><a rel="noopener" href="https://wiki.openstreetmap.org/wiki/ES:Argentina" target="_blank"
+              class="tx-white"><i class="fas fa-users"></i>
               Sumate a la comunidad</a></li>
         </ul>
       </div>
@@ -44,8 +61,9 @@
   </header>
   <div id="map"></div>
   <div id="mapa" class="section scrollspy"></div>
-  <button id="panelToggle" class="btn-panel panelToggle" onclick="ocultarPanel()"><i
-      class="fas fa-layer-group"></i></button>
+  <button id="panelToggle" class="btn-panel panelToggle" onclick="ocultarPanel()">
+    <i class="fas fa-layer-group"></i>
+  </button>
   <section id="panel" class="capas oculto">
     <div id=menuDatos class="datosMenu formulario">
       <div id='menuMapaBase'>
@@ -66,9 +84,9 @@
 
         <input id='chk_sup_calles' type='checkbox' name='rtoggle' value='chk_sup_calles'>
         <label for='chk_sup_calles'>Calles
-          <span style="background-color: #d742f5; padding: 1px 3px; border-radius: 8px; color: #fff;">con</span>
+          <span class="calles conPavimento">con</span>
           y
-          <span style="background-color: #e87400; padding: 1px 3px; border-radius: 8px; color: #fff;">sin</span>
+          <span class="calles sinPavimento">sin</span>
           pavimento</label><br />
       </div>
 
@@ -86,11 +104,24 @@
     } else {
       var map = new mapboxgl.Map({
         container: 'map',
+        projection: 'globe',
         style: 'map/styles/osm-argentina-min.json',
-        center: [-63.0, -44.8],
-        zoom: 3,
+        center: [-64.13, -48.83],
+        zoom: 2.5,
         hash: true,
       });
+
+      map.on('style.load', () => {
+        map.setFog({
+          color: 'rgb(186, 210, 235)', // Lower atmosphere
+          'high-color': 'rgb(36, 92, 223)', // Upper atmosphere
+          'horizon-blend': 0.02, // Atmosphere thickness (default 0.2 at low zooms)
+          'space-color': 'rgb(11, 11, 25)', // Background color
+          'star-intensity': 0.1 // Background star brightness (default 0.35 at low zoooms )
+        });
+
+      });
+
       var nav = new mapboxgl.NavigationControl();
       map.addControl(nav, 'top-right');
       map.addControl(new mapboxgl.GeolocateControl());
