@@ -16,6 +16,12 @@
       "url": "mapbox://mapbox.satellite?access_token=pk.eyJ1IjoiemFsaXRvYXIiLCJhIjoiYVJFNTlfbyJ9.mPX8qTsRUGOOETl0CtA-Pg",
       "tileSize": 256
     },
+    "esri-imagery": {
+      "type": "raster",
+      "tiles": ["https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png"],
+      "tileSize": 256,
+      "attribution": "©Esri"
+    },
     "openmaptiles": {
       "type": "vector",
       "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=mrAd6GSd7v7Oc7PXFwwp"
@@ -37,8 +43,7 @@
     {
       "id": "satelite",
       "type": "raster",
-      "source": "mapbox-imagery",
-      "source-layer": "mapbox_satellite_full",
+      "source": "esri-imagery",
       "layout": {"visibility": "none"}
     },
     {
