@@ -9,20 +9,20 @@
 header {
   position: fixed;
   width: 100%;
-  border-bottom: 5px solid #0B3954;
+  border-bottom: 5px solid #0b3954;
   z-index: 3;
-  background: #2196F3;
+  background: #2196f3;
 }
 
 header nav {
   width: 90%;
   margin: 0 auto;
-  height: 59px
+  height: 59px;
 }
 
 .nav-buttons {
   display: inline-block;
-  float: right
+  float: right;
 }
 
 .nav-buttons ul {
@@ -42,7 +42,7 @@ header nav {
 }
 
 .nav-buttons ul li a:hover {
-  background: #0B3954;
+  background: #0b3954;
   -webkit-transition: background 0.5s;
   transition: background 0.5s;
 }
@@ -56,20 +56,20 @@ header nav {
   height: 59px;
 }
 
-@media screen and (max-width:1248px) {
+@media screen and (max-width: 1248px) {
   header nav {
     width: 100%;
   }
 }
 
-@media screen and (max-width:1123px) {
+@media screen and (max-width: 1123px) {
   header {
     width: 80%;
     height: 100%;
     position: fixed;
     display: block;
-    background: #0B3954;
-    left: -100%
+    background: #0b3954;
+    left: -100%;
   }
 
   .small-logo {
@@ -89,18 +89,18 @@ header nav {
   .nav-buttons ul li {
     float: none;
     display: block;
-    border-bottom: 2px solid #2196F3;
+    border-bottom: 2px solid #2196f3;
   }
 
   .nav-buttons ul li a:active {
-    background: #2196F3
+    background: #2196f3;
   }
 
   .menu-bar {
     display: block;
     width: 100%;
-    background: #2196F3;
-    border-bottom: 5px solid #0B3954;
+    background: #2196f3;
+    border-bottom: 5px solid #0b3954;
   }
 
   .menu-bar a {
@@ -115,7 +115,7 @@ header nav {
   }
 }
 
-@media screen and (max-width:451px) {
+@media screen and (max-width: 451px) {
   .big-logo {
     height: 30px;
     margin: 12.5px 0;
@@ -125,13 +125,12 @@ header nav {
     width: auto !important;
     left: 26% !important;
   }
-
 }
 
 /* COLORES */
 
 .bg-light-blue {
-  background: #2196F3;
+  background: #2196f3;
 }
 
 .tx-white {
@@ -154,7 +153,7 @@ header nav {
   position: absolute;
   margin: 50px 0 0 5px;
   z-index: 1;
-  background: rgba(255, 255, 255, .5);
+  background: rgba(255, 255, 255, 0.5);
   padding: 10px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
@@ -163,7 +162,7 @@ header nav {
 .formulario label {
   display: inline-block;
   cursor: pointer;
-  color: #0074D9;
+  color: #0074d9;
   position: relative;
   padding: 5px 15px;
   font-size: 1em;
@@ -215,18 +214,18 @@ label:before {
   border-radius: 5px;
   height: 60px;
   width: 60px;
-  border: 2px solid #0074D9;
+  border: 2px solid #0074d9;
   margin: auto;
 }
 
 .marco-map {
-  background-image: url('../img/map.png');
+  background-image: url("../img/map.png");
   background-position: center;
   background-size: cover;
 }
 
 .marco-sat {
-  background-image: url('../img/satellite.png');
+  background-image: url("../img/satellite.png");
   background-position: center;
   background-size: cover;
 }
@@ -241,7 +240,7 @@ input[type="radio"]:checked+label:before {
 
 input[type="radio"]:checked+label {
   padding: 5px 15px;
-  background: #0074D9;
+  background: #0074d9;
   border-radius: 2px;
   color: #fff;
 }
@@ -255,7 +254,7 @@ input[type="checkbox"]:checked+label:before {
 }
 
 input[type="checkbox"]:checked+label {
-  background: #0074D9;
+  background: #0074d9;
   color: #fff;
 }
 
@@ -284,7 +283,7 @@ input[type="checkbox"]:checked+label {
 
 .btn-panel {
   padding: 5px 15px;
-  background: #0074D9;
+  background: #0074d9;
   border-radius: 2px;
   color: #fff;
   margin-top: 5px;
@@ -294,12 +293,12 @@ input[type="checkbox"]:checked+label {
 }
 
 button:hover {
-  background: #0074D0;
+  background: #0074d0;
 }
 
 button:active {
   background: #dddddd;
-  color: #0074D9;
+  color: #0074d9;
 }
 
 .oculto {
@@ -313,7 +312,7 @@ button:active {
 }
 
 .map-overlay {
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
   position: absolute;
   width: 35%;
   bottom: 0;
@@ -354,7 +353,7 @@ button:active {
 .map-overlay-inner button {
   display: inline-block;
   cursor: pointer;
-  background: #0074D9;
+  background: #0074d9;
   color: #ffffff;
   position: relative;
   padding: 5px 15px;
@@ -368,15 +367,26 @@ button:active {
 
 .map-overlay-inner button:hover {
   background: rgba(0, 116, 217, 0.1);
-  color: #0074D9;
+  color: #0074d9;
+}
+
+.mapboxgl-ctrl {
+  opacity: 0.35;
+  /* filter: invert(100); */
+}
+
+.mapboxgl-ctrl:hover {
+  opacity: 0.9;
+  /* background-color: #ff8b25;
+  color: #fff; */
 }
 
 /* FUENTES */
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('../font/roboto/Roboto-Regular.ttf') format('truetype'),
-    url('../font/roboto/Roboto-Regular.woff') format('woff'), ;
+  font-family: "Roboto";
+  src: url("../font/roboto/Roboto-Regular.ttf") format("truetype"),
+    url("../font/roboto/Roboto-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

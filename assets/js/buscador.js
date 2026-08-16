@@ -18,7 +18,8 @@ function viajar(bbox) {
 			[ bbox[2], bbox[0] ],
 			[ bbox[3], bbox[1] ]
 		], {
-			padding: { top: 10, bottom:25, left: 15, right: 5 }
+			padding: { top: 10, bottom:25, left: 15, right: 5 },
+			duration: 0
 	});
 };
 

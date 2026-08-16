@@ -13,10 +13,11 @@
   <meta property="og:title" content="OpenStreetMap Argentina">
   <meta property="og:site_name" content="OpenStreetMap Argentina">
   <meta property="og:description" content="comunidad argentina de OpenStreetMap">
-  <meta property="og:url" content="https://openstreetmap.org.ar">
-  <meta property="og:image" itemprop="image" content="https://openstreetmap.org.ar/assets/img/osm-ar-logo.jpg">
+  <meta property="og:url" content="https://osm-ar.github.io/osm-argentina-website">
+  <meta property="og:image" itemprop="image"
+    content="https://osm-ar.github.io/osm-argentina-website/assets/img/osm-ar-logo.jpg">
   <meta property="og:image:secure_url" itemprop="image"
-    content="https://openstreetmap.org.ar/assets/img/osm-ar-logo.jpg">
+    content="https://osm-ar.github.io/osm-argentina-website/assets/img/osm-ar-logo.jpg">
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="256" />
   <meta property="og:image:height" content="256" />
@@ -32,7 +33,7 @@
     href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css'
     type='text/css' />
   <script src="assets/js/nav.js"></script>
-  <script defer src="/assets/font/fontawesome/js/all.js"></script>
+  <script defer src="assets/font/fontawesome/js/all.js"></script>
 </head>
 
 <body>
@@ -108,7 +109,7 @@
         style: 'map/styles/osm-argentina.json',
         center: [-64.13, -48.83],
         zoom: 1.5,
-        hash: true,
+        hash: true
       });
 
       map.on('style.load', () => {
